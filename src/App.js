@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
+import Register from './users/Register'
 import Login from './users/Login'
 import Logout from './users/Logout'
 
@@ -68,7 +69,8 @@ export default class App extends Component {
     return (
       <>
         <h1>Booksom Buddies</h1>
-        <Login login={this.loginUser} change={this.handleChange} />
+        <Register />
+        <Login login={this.loginUser} change={this.handleChange} loggedIn={this.state.userLoggedIn}/>
         <Logout logout={this.logoutUser} loggedIn={this.state.userLoggedIn} />
       </>
     )

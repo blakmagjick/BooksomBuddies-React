@@ -1,5 +1,11 @@
-export default function Login(props) {
+export default function Login (props) {
+    const loggedIn = props.loggedIn
+    if (loggedIn)
     return(
+        <></>
+    )
+    else 
+    return (
         <>
             <form id='loginform'>
                 <label>Username:</label>
