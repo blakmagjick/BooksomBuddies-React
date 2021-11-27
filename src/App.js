@@ -77,9 +77,10 @@ export default class App extends Component {
       this.setState({
         email: '',
         username: '',
-        password: ''
+        password: '',
+        userLoggedIn: true
       })
-      document.getElementById('regform').reset()
+      // document.getElementById('regform').reset()
     })
     .catch (
       error => console.log('Error:', error))
@@ -131,7 +132,7 @@ export default class App extends Component {
 
   setButton1 = () => {
     this.setState({
-      buttonId: true
+      buttonId: true,
     })
   }
 
@@ -144,12 +145,14 @@ export default class App extends Component {
   render(){
     return (
       <>
-        <h1>Booksom Buddies</h1>
+        {/* REGISTER/LOGIN/LOGOUT */}
         <RegisterButton setButton={this.setButton1} button={this.state.buttonId} loggedIn={this.state.userLoggedIn}/>
         <Register buttonId={this.state.buttonId} loggedIn={this.state.userLoggedIn} change={this.handleChange} register={this.handleRegister} />
-        <LoginButton button={this.state.loggedButton} setButton={this.setButton2} />
+        <LoginButton button={this.state.loggedButton} setButton={this.setButton2} loggedIn={this.state.userLoggedIn}/>
         <Login login={this.loginUser} change={this.handleChange} loggedIn={this.state.userLoggedIn} button={this.state.loggedButton} />
         <Logout logout={this.logoutUser} loggedIn={this.state.userLoggedIn} buttonId={this.state.buttonId} />
+        {/* MAIN PAGE */}
+        <hr />
       </>
     )
   }
