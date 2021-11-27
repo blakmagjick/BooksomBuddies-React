@@ -1,11 +1,8 @@
 export default function Login (props) {
+    const button = props.button
     const loggedIn = props.loggedIn
-    if (loggedIn)
+    if (button === true && loggedIn === false)
     return(
-        <></>
-    )
-    else 
-    return (
         <>
             <form id='loginform'>
                 <label>Username:</label>
@@ -22,8 +19,13 @@ export default function Login (props) {
                     name='password'
                     onChange={(event) => props.change(event)}
                 />
-                <input type='button' value='Login' id='submit' onClick={props.login} />
+                <input type='button' value='Login' id='loginsubmit' onClick={props.login} />
             </form>
+        </>
+    )
+    else 
+    return (
+        <>
         </>
     )
 }
