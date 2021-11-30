@@ -1,4 +1,9 @@
 body {
   margin: 15px;
-  background-color: lightslategrey;
+  background-color:rgb(21, 35, 43);
+  color: lightslategrey;
+}
+
+footer {
+  text-align: center;
 }

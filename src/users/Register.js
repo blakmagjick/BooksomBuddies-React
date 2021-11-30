@@ -4,7 +4,7 @@ export default function Register (props) {
     if (buttonId === true && loggedIn === false) 
     return (
         <>
-            <form id='regform'>
+            <form class="bg-transparent shadow-md rounded px-3 pt-3 mb-3" id='regform'>
                 <label>Username:</label>
                 <input 
                     type='text'
@@ -26,7 +26,7 @@ export default function Register (props) {
                     name='password'
                     onChange={(event) => props.change(event)}
                 />
-                <input type='button' value='Register' id='regsubmit' onClick={props.register} />
+                <input class='bg-gray-500 text-white font-bold py-1 px-1 rounded-full' type='button' value='Register' id='regsubmit' onClick={props.register} />
             </form>
         </>
     )

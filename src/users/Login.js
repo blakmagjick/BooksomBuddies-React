@@ -4,7 +4,7 @@ export default function Login (props) {
     if (button === true && loggedIn === false)
     return(
         <>
-            <form id='loginform'>
+            <form class="bg-transparent shadow-md rounded px-3 pt-0 mb-3" id='loginform'>
                 <label>Username:</label>
                 <input 
                     type='text'
@@ -19,7 +19,7 @@ export default function Login (props) {
                     name='password'
                     onChange={(event) => props.change(event)}
                 />
-                <input type='button' value='Login' id='loginsubmit' onClick={props.login} />
+                <input class='bg-gray-500 text-white font-bold py-1 px-1 rounded-full' type='button' value='Login' id='loginsubmit' onClick={props.login} />
             </form>
         </>
     )
