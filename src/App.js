@@ -23,6 +23,8 @@ export default class App extends Component {
       password: '',
       users: [],
       posts: [],
+      title: '',
+      post: '',
       books: false,
       regButton: false,
       postToBeEdited: null
@@ -62,6 +64,36 @@ export default class App extends Component {
     })
   }
 
+  handleSubmit = async (event) => {
+    event.preventDefault()
+    const URL = this.state.baseURL + '/posts/' + this.state.postToBeEdited.id
+    try {const response = await fetch(URL, {
+      method: 'PUT',
+      body: JSON.stringify({
+        title: event.target.title.value,
+        post: event.target.post.value
+      }),
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      credentials: 'include'
+    })
+    if (response.status === 200){
+      const updatedPost = (await response.json()).data
+      console.log(updatedPost)
+      const findIndex = this.state.posts.findIndex(post => post.id === updatedPost.id)
+      const copyPosts = [...this.state.posts]
+      copyPosts[findIndex] = updatedPost
+      this.setState({
+        posts: copyPosts,
+        modalOpen: false})
+      }
+    }
+  catch(err){
+    console.log('Error =>', err);
+    }
+  }
+
   handleRegister = (event) => {
     event.preventDefault()
     fetch(this.state.baseURL + '/users/register', {
@@ -84,7 +116,6 @@ export default class App extends Component {
       this.addUser(data)
       this.setState({
         email: '',
-        username: '',
         password: '',
         userLoggedIn: true
       })
@@ -117,7 +148,6 @@ export default class App extends Component {
         response.json().then(
           body => console.log('✨ Login successful! 🎉'))
         this.setState({
-          username: '',
           password: '',
           userLoggedIn: true,
           loggedButton: false
@@ -128,7 +158,6 @@ export default class App extends Component {
     catch (error) {
       console.log('Error =>', error)
     }
-
   }
 
   logoutUser = () => {
@@ -143,7 +172,8 @@ export default class App extends Component {
       console.log('Logout successful!')
       this.setState({
         userLoggedIn: false,
-        posts: []
+        posts: [],
+        modalOpen: false
       })
     })
   }
@@ -222,7 +252,7 @@ export default class App extends Component {
         {/* MAIN PAGE */}
         <hr />
         {this.state.books && <Books />}
-        {this.state.posts && <MainPost posts={this.state.posts} showEditForm={this.showEditForm}/>}
+        {this.state.posts && <MainPost posts={this.state.posts} showEditForm={this.showEditForm} modal={this.state.modalOpen} handleChange={this.handleChange} postToBeEdited={this.state.postToBeEdited} handleSubmit={this.handleSubmit}/>}
       </>
     )
   }

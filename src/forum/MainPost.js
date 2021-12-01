@@ -29,6 +29,25 @@ export default class MainPost extends Component {
                         )}
                     </tbody>
                 </table>
+                <br />
+                {
+                this.props.modal &&
+                <form onSubmit={this.props.handleSubmit}>
+                    <label>Title: </label>
+                    <input 
+                        name='title'
+                        defaultValue={this.props.postToBeEdited.title}
+                        onChange={this.props.handleChange}    
+                    />
+                    <label>Post: </label>
+                    <input 
+                        name='post'
+                        defaultValue={this.props.postToBeEdited.post}
+                        onChange={this.props.handleChange}  
+                    /><br />
+                    <button>Update Post</button>
+                </form>
+                }
             </React.Fragment>
         )
     }
