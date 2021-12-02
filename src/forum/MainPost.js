@@ -10,45 +10,49 @@ export default class MainPost extends Component {
 
     render () {
         return (
-            <React.Fragment>
-                <h1 className='text-2xl font-semibold'>Welcome to the Book Forum</h1>
-                <table>
-                    <tbody>
-                        {this.props.posts.map((post, i) => {
-                                return (
-                                    <tr key={i}>
-                                        <td>Title: {post.title} <br />
-                                        Post: {post.post} <br />
-                                        Name: {post.name.username} <br />
-                                        </td> 
-                                        <td onClick={() => this.props.showEditForm(post)}>✎</td>
-                                        {/* <td onClick={() => this.props.deletePost(post.id)}>x</td>  */}
-                                    </tr>
-                                )
-                            }
-                        )}
-                    </tbody>
-                </table>
-                <br />
-                {
-                this.props.modal &&
-                <form onSubmit={this.props.handleSubmit}>
-                    <label>Title: </label>
-                    <input 
-                        name='title'
-                        defaultValue={this.props.postToBeEdited.title}
-                        onChange={this.props.handleChange}    
-                    />
-                    <label>Post: </label>
-                    <input 
-                        name='post'
-                        defaultValue={this.props.postToBeEdited.post}
-                        onChange={this.props.handleChange}  
-                    /><br />
-                    <button>Update Post</button>
-                </form>
-                }
-            </React.Fragment>
+        <React.Fragment>
+           {this.props.posts.map((post, i) => {
+               console.log(post)
+               console.log(this.props.posts)
+               console.log(post.name.id)
+               console.log(this.props.currentUserId)
+                return (
+                <>
+                    <li key={i}>
+                        <span>Title: {post.title}</span><br />
+                        <span>Post: {post.post}</span><br />
+                        <span>Name: {post.name.username}</span><br />
+                    </li> 
+                    <button>Comment</button>
+                    {
+                        post.name.id === this.props.currentUserId && 
+                        <button>Edit</button> 
+                    }
+                        {/* <div id='modalbg'>
+                            <div id='modalmain'>
+                                <form onSubmit={this.props.handleSubmit}>
+                                    <label>Title: </label>
+                                    <input 
+                                        name='title'
+                                        defaultValue={this.props.postToBeEdited.title}
+                                        onChange={this.props.handleChange}    
+                                    />
+                                    <label>Post: </label>
+                                    <input 
+                                        name='post'
+                                        defaultValue={this.props.postToBeEdited.post}
+                                        onChange={this.props.handleChange}  
+                                    /><br />
+                                    <button className='bg-gray-500 text-white font-bold py-1 px-1 rounded-full'>Update</button>
+                                </form> 
+                            </div>
+                        </div> 
+                    } */}
+                </>    
+                    ) 
+                })
+           }
+        </React.Fragment>
         )
     }
 }

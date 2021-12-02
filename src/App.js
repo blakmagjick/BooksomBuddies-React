@@ -18,6 +18,7 @@ export default class App extends Component {
       modalOpen: false, 
       userLoggedIn: false,
       loggedButton: false,
+      currentUserId: null,
       email: '',
       username: '',
       password: '',
@@ -65,6 +66,7 @@ export default class App extends Component {
   }
 
   handleSubmit = async (event) => {
+    console.log(this.state.postToBeEdited.name.username)
     event.preventDefault()
     const URL = this.state.baseURL + '/posts/' + this.state.postToBeEdited.id
     try {const response = await fetch(URL, {
@@ -78,20 +80,20 @@ export default class App extends Component {
       },
       credentials: 'include'
     })
-    if (response.status === 200){
-      const updatedPost = (await response.json()).data
-      console.log(updatedPost)
-      const findIndex = this.state.posts.findIndex(post => post.id === updatedPost.id)
-      const copyPosts = [...this.state.posts]
-      copyPosts[findIndex] = updatedPost
-      this.setState({
-        posts: copyPosts,
-        modalOpen: false})
+      if (response.status === 200){
+        const updatedPost = (await response.json()).data
+        // console.log(updatedPost)
+        const findIndex = this.state.posts.findIndex(post => post.id === updatedPost.id)
+        const copyPosts = [...this.state.posts]
+        copyPosts[findIndex] = updatedPost
+        this.setState({
+          posts: copyPosts,
+          modalOpen: false})
+        }
+    }
+    catch(err){
+      console.log('Error =>', err);
       }
-    }
-  catch(err){
-    console.log('Error =>', err);
-    }
   }
 
   handleRegister = (event) => {
@@ -145,12 +147,16 @@ export default class App extends Component {
       })
 
       if (response.status === 200) {
-        response.json().then(
-          body => console.log('✨ Login successful! 🎉'))
-        this.setState({
-          password: '',
-          userLoggedIn: true,
-          loggedButton: false
+        response.json()
+        .then
+        (data => {
+          console.log('✨ Login successful! 🎉', data)
+          this.setState({
+            password: '',
+            userLoggedIn: true,
+            loggedButton: false,
+            currentUserId: data.data.id
+          })
         })
         this.getPosts()
       }
@@ -241,6 +247,8 @@ export default class App extends Component {
   }
 
   render(){
+    // console.log(this.state.postToBeEdited)
+    // console.log(this.state.currentUserId)
     return (
       <>
         {/* REGISTER/LOGIN/LOGOUT */}
@@ -252,7 +260,7 @@ export default class App extends Component {
         {/* MAIN PAGE */}
         <hr />
         {this.state.books && <Books />}
-        {this.state.posts && <MainPost posts={this.state.posts} showEditForm={this.showEditForm} modal={this.state.modalOpen} handleChange={this.handleChange} postToBeEdited={this.state.postToBeEdited} handleSubmit={this.handleSubmit}/>}
+        {this.state.posts && <MainPost posts={this.state.posts} showEditForm={this.showEditForm} modal={this.state.modalOpen} handleChange={this.handleChange} postToBeEdited={this.state.postToBeEdited} handleSubmit={this.handleSubmit} username={this.state.username} currentUserId={this.state.currentUserId}/>}
       </>
     )
   }
