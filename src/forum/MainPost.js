@@ -28,6 +28,10 @@ export default class MainPost extends Component {
                         post.name.id === this.props.currentUserId && 
                         <button>Edit</button> 
                     }
+                    {
+                        post.name.id === this.props.currentUserId && 
+                        <button onClick={() => this.props.delete(post.id)}>Delete</button> 
+                    }
                         {/* <div id='modalbg'>
                             <div id='modalmain'>
                                 <form onSubmit={this.props.handleSubmit}>

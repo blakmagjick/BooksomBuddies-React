@@ -9,6 +9,7 @@ import Logout from './users/Logout'
 import Books from './books/Books'
 
 import MainPost from './forum/MainPost'
+import NewPost from './forum/NewPost'
 
 export default class App extends Component {
   constructor(){
@@ -51,11 +52,53 @@ export default class App extends Component {
     })
   }
 
+  getPosts = () => {
+    fetch(this.state.baseURL + '/posts/', {
+      credentials: 'include'
+    })
+    .then (response => {
+      // console.log(response)
+      if (response.status === 200) {
+        return response.json()
+      } else {
+        return []
+      }  
+    })
+    .then(data => {
+      // console.log(data)
+      this.setState({
+        posts: data.data
+      })
+    })
+  }
+
   addUser = (newUser) => {
     const copyUsers = [...this.state.users]
     copyUsers.push(newUser)
     this.setState({
       users: copyUsers
+    })
+  }
+
+  addPost = (newPost) => {
+    const copyPosts = [...this.state.posts]
+    copyPosts.push(newPost)
+    this.setState({
+      posts: copyPosts
+    })
+  }
+
+  deletePost = (id) => {
+    fetch(this.state.baseURL + '/posts/' + id, {
+      method: 'DELETE'
+    })
+    .then (response => {
+      const findIndex = this.state.posts.findIndex(post => post.id === id)
+      const copyPosts = [...this.state.posts]
+      copyPosts.splice(findIndex, 1)
+      this.setState({
+        posts: copyPosts
+      })
     })
   }
 
@@ -95,6 +138,34 @@ export default class App extends Component {
       console.log('Error =>', err);
       }
   }
+
+  handleSubmitNew = (event) => {
+    event.preventDefault()
+    fetch(this.state.baseURL + '/posts/', {
+        method: 'POST',
+        body: JSON.stringify({
+            title: this.state.title, 
+            post: this.state.post
+        }),
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        credentials: 'include'
+    })
+    .then (response => {
+        console.log(response)
+        return response.json()
+    })
+    .then (data => {
+        console.log(data)
+        this.addPost(data)
+        this.setState({
+            title: '',
+            post: ''
+        })
+    })
+    .catch (error => console.log({'Error => ': error}))
+}
 
   handleRegister = (event) => {
     event.preventDefault()
@@ -203,26 +274,6 @@ export default class App extends Component {
     })
   }
 
-  getPosts = () => {
-    fetch(this.state.baseURL + '/posts/', {
-      credentials: 'include'
-    })
-    .then (response => {
-      // console.log(response)
-      if (response.status === 200) {
-        return response.json()
-      } else {
-        return []
-      }  
-    })
-    .then(data => {
-      // console.log(data)
-      this.setState({
-        posts: data.data
-      })
-    })
-  }
-
   checkLoggedIn = () => {
     fetch(this.state.baseURL + '/users/who_is_logged_in', {
       credentials: 'include'
@@ -260,7 +311,8 @@ export default class App extends Component {
         {/* MAIN PAGE */}
         <hr />
         {this.state.books && <Books />}
-        {this.state.posts && <MainPost posts={this.state.posts} showEditForm={this.showEditForm} modal={this.state.modalOpen} handleChange={this.handleChange} postToBeEdited={this.state.postToBeEdited} handleSubmit={this.handleSubmit} username={this.state.username} currentUserId={this.state.currentUserId}/>}
+        {this.state.posts && <MainPost posts={this.state.posts} showEditForm={this.showEditForm} modal={this.state.modalOpen} handleChange={this.handleChange} postToBeEdited={this.state.postToBeEdited} handleSubmit={this.handleSubmit} username={this.state.username} currentUserId={this.state.currentUserId} delete={this.deletePost}/>}
+        {this.state.userLoggedIn && <NewPost handleChange={this.handleChange} handleSubmit={this.handleSubmitNew} userLoggedIn={this.state.userLoggedIn} baseURL={this.state.baseURL}/>}
       </>
     )
   }
