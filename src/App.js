@@ -267,6 +267,7 @@ export default class App extends Component {
   }
 
   showEditForm = (post) => {
+    // console.log('Pushed')
     this.setState({
       modalOpen: true,
       postToBeEdited: post

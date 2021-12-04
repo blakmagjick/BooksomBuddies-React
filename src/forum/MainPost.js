@@ -12,10 +12,6 @@ export default class MainPost extends Component {
         return (
         <React.Fragment>
            {this.props.posts.map((post, i) => {
-               {/* console.log(post)
-               console.log(this.props.posts)
-               console.log(post.name.id)
-               console.log(this.props.currentUserId) */}
                 return (
                 <>
                     <li key={i}>
@@ -26,13 +22,14 @@ export default class MainPost extends Component {
                     <button>Comment</button>
                     {
                         post.name.id === this.props.currentUserId && 
-                        <button>Edit</button> 
+                        <button onClick={() => this.props.showEditForm(post)}>Edit</button> 
                     }
                     {
                         post.name.id === this.props.currentUserId && 
                         <button onClick={() => this.props.delete(post.id)}>Delete</button> 
                     }
-                        {/* <div id='modalbg'>
+                    {   this.props.modal &&  
+                        <div id='modalbg'>
                             <div id='modalmain'>
                                 <form onSubmit={this.props.handleSubmit}>
                                     <label>Title: </label>
@@ -51,7 +48,7 @@ export default class MainPost extends Component {
                                 </form> 
                             </div>
                         </div> 
-                    } */}
+                    }
                 </>    
                     ) 
                 })
