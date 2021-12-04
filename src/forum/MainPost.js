@@ -12,10 +12,10 @@ export default class MainPost extends Component {
         return (
         <React.Fragment>
            {this.props.posts.map((post, i) => {
-               console.log(post)
+               {/* console.log(post)
                console.log(this.props.posts)
                console.log(post.name.id)
-               console.log(this.props.currentUserId)
+               console.log(this.props.currentUserId) */}
                 return (
                 <>
                     <li key={i}>

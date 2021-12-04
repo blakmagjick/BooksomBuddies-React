@@ -45,7 +45,7 @@ export default class App extends Component {
       }  
     })
     .then(data => {
-      console.log(data)
+      // console.log(data)
       this.setState({
         users: data.data
       })
@@ -109,7 +109,7 @@ export default class App extends Component {
   }
 
   handleSubmit = async (event) => {
-    console.log(this.state.postToBeEdited.name.username)
+    // console.log(this.state.postToBeEdited.name.username)
     event.preventDefault()
     const URL = this.state.baseURL + '/posts/' + this.state.postToBeEdited.id
     try {const response = await fetch(URL, {
@@ -139,7 +139,7 @@ export default class App extends Component {
       }
   }
 
-  handleSubmitNew = (event) => {
+  handleSubmitNew = async (event) => {
     event.preventDefault()
     fetch(this.state.baseURL + '/posts/', {
         method: 'POST',
@@ -153,12 +153,12 @@ export default class App extends Component {
         credentials: 'include'
     })
     .then (response => {
-        console.log(response)
+        // console.log(response)
         return response.json()
     })
     .then (data => {
-        console.log(data)
-        this.addPost(data)
+        // console.log(data)
+        this.addPost(data.data)
         this.setState({
             title: '',
             post: ''
@@ -181,11 +181,11 @@ export default class App extends Component {
       credentials: 'include'
     })
     .then (response => {
-      console.log(response)
+      // console.log(response)
       return response.json()
     })
     .then (data => {
-      console.log(data)
+      // console.log(data)
       this.addUser(data)
       this.setState({
         email: '',
@@ -199,14 +199,12 @@ export default class App extends Component {
 
   loginUser = async (event) => {
     event.preventDefault()
-
     const URL = this.state.baseURL + '/users/login'
     const loginDeets = {
       username: this.state.username,
       password: this.state.password
     }
     // console.log(loginDeets) // Testing
-
     try {
       const response = await fetch(URL, {
         method: 'POST',
@@ -221,7 +219,8 @@ export default class App extends Component {
         response.json()
         .then
         (data => {
-          console.log('✨ Login successful! 🎉', data)
+          // console.log('✨ Login successful! 🎉', data)
+          console.log('✨ Login successful! 🎉')
           this.setState({
             password: '',
             userLoggedIn: true,
@@ -280,12 +279,17 @@ export default class App extends Component {
     })
     .then (response => {
       if (response.status === 200) {
-        this.setState({
-          userLoggedIn: true
+        response.json()
+        .then(body => {
+          // console.log(body, body.data.id)
+          this.setState({
+            userLoggedIn: true,
+            currentUserId: body.data.id
+          })
         })
         this.getPosts()
         console.log('A user is currently logged in')
-        return response.json()
+        return response
       }
       else {
         console.log('No one is currently logged in')
