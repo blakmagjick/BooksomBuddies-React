@@ -13,8 +13,8 @@ button {
 }
 
 #modalbg {
-  background: rgba(0, 0, 0, .5);
-  position: absolute;
+  background: rgba(0, 0, 0, .2);
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
@@ -26,4 +26,23 @@ button {
 
 #modalmain {
   background-color: lightgrey;
+  padding-top: 10px;
+  width: 50%;
+  height: 10%;
+  border-radius: 20px;
+  border: 2px 2px 10px 3px #222;
+
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
 }
+
+#postlines {
+  border-top: 2px dashed grey;
+}
+
+/* #forumpic {
+  margin-left: auto;
+  margin-right: auto;
+} */

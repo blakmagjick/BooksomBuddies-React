@@ -141,6 +141,7 @@ export default class App extends Component {
 
   handleSubmitNew = async (event) => {
     event.preventDefault()
+    event.target.reset()
     fetch(this.state.baseURL + '/posts/', {
         method: 'POST',
         body: JSON.stringify({
@@ -162,7 +163,7 @@ export default class App extends Component {
         this.setState({
             title: '',
             post: ''
-        })
+        })  
     })
     .catch (error => console.log({'Error => ': error}))
 }
@@ -289,7 +290,7 @@ export default class App extends Component {
           })
         })
         this.getPosts()
-        console.log('A user is currently logged in')
+        // console.log('A user is currently logged in')
         return response
       }
       else {
@@ -317,6 +318,7 @@ export default class App extends Component {
         <hr />
         {this.state.books && <Books />}
         {this.state.posts && <MainPost posts={this.state.posts} showEditForm={this.showEditForm} modal={this.state.modalOpen} handleChange={this.handleChange} postToBeEdited={this.state.postToBeEdited} handleSubmit={this.handleSubmit} username={this.state.username} currentUserId={this.state.currentUserId} delete={this.deletePost}/>}
+        <hr />
         {this.state.userLoggedIn && <NewPost handleChange={this.handleChange} handleSubmit={this.handleSubmitNew} userLoggedIn={this.state.userLoggedIn} baseURL={this.state.baseURL}/>}
       </>
     )

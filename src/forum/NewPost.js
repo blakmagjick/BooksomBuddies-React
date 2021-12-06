@@ -5,22 +5,23 @@ export default function NewPost (props) {
     if (loggedIn)
     return(
         <React.Fragment>
-            <form onSubmit={props.handleSubmit}>
+            <h1 className='text-xl font-semibold'>Create New Post</h1>
+            <form id='newpostform' onSubmit={props.handleSubmit}>
                 <label>Title: </label>
                 <input 
                     type='text'
                     id='title'
                     name='title'
                     onChange={(event) => props.handleChange(event)}
-                />
+                /><br />
                 <label>Post: </label>
                 <input 
                     type='text'
                     id='post'
                     name='post'
                     onChange={(event) => props.handleChange(event)}
-                /><br />
-                <input type='submit' value='Add Post' />
+                /><br /><br />
+                <input className='bg-gray-500 text-white font-bold py-1 px-1 rounded-full' type='submit' value='Add Post' />
             </form>
         </React.Fragment>
     )
