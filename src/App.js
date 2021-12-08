@@ -17,19 +17,23 @@ export default class App extends Component {
     this.state ={
       baseURL: 'http://localhost:8000',
       modalOpen: false, 
+      commentModelOpen: false,
       userLoggedIn: false,
       loggedButton: false,
+      commentButton: false,
       currentUserId: null,
       email: '',
       username: '',
       password: '',
       users: [],
       posts: [],
+      comments: [],
       title: '',
       post: '',
       books: false,
       regButton: false,
-      postToBeEdited: null
+      postToBeEdited: null,
+      commentToBeEditd: null
     }
   }
 
@@ -65,10 +69,30 @@ export default class App extends Component {
       }  
     })
     .then(data => {
-      // console.log(data)
+      console.log(data.data)
       this.setState({
         posts: data.data
       })
+    })
+  }
+
+  getComments = () => {
+    fetch(this.state.baseURL + '/posts/comments/', {
+      credentials: 'include'
+    })
+    .then (response => {
+      // console.log(response)
+      if (response.status === 200) {
+        return response.json()
+      } else {
+        return []
+      }
+    })
+    .then (data => {
+      console.log(data.data)
+        this.setState({
+          comments: data.data
+        })
     })
   }
 
@@ -98,6 +122,20 @@ export default class App extends Component {
       copyPosts.splice(findIndex, 1)
       this.setState({
         posts: copyPosts
+      })
+    })
+  }
+
+  deleteComment = (id) => {
+    fetch(this.state.baseURL + '/posts/comments/' + id, {
+      method: 'DELETE'
+    })
+    .then (response => {
+      const findIndex = this.state.comments.findIndex(comment => comment.id === id)
+      const copyComments = [...this.state.comments]
+      copyComments.splice(findIndex, 1)
+      this.setState({
+        comments: copyComments
       })
     })
   }
@@ -132,6 +170,36 @@ export default class App extends Component {
         this.setState({
           posts: copyPosts,
           modalOpen: false})
+        }
+    }
+    catch(err){
+      console.log('Error =>', err);
+      }
+  }
+
+  handleCommentEdit = async (event) => {
+    // console.log(this.state.postToBeEdited.name.username)
+    event.preventDefault()
+    const URL = this.state.baseURL + '/posts/comments/' + this.state.commentToBeEdited.id
+    try {const response = await fetch(URL, {
+      method: 'PUT',
+      body: JSON.stringify({
+        comment: event.target.comment.value
+      }),
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      credentials: 'include'
+    })
+      if (response.status === 200){
+        const updatedComment = (await response.json()).data
+        console.log(updatedComment)
+        const findIndex = this.state.comments.findIndex(comment => comment.id === updatedComment.id)
+        const copyComments = [...this.state.comments]
+        copyComments[findIndex] = updatedComment
+        this.setState({
+          comments: copyComments,
+          commentModelOpen: false})
         }
     }
     catch(err){
@@ -190,8 +258,7 @@ export default class App extends Component {
       this.addUser(data)
       this.setState({
         email: '',
-        password: '',
-        userLoggedIn: true
+        password: ''
       })
     })
     .catch (
@@ -267,11 +334,25 @@ export default class App extends Component {
     })
   }
 
+  setButton3 = () => {
+    this.setState({
+      commentButton: true
+    })
+  }
+
   showEditForm = (post) => {
     // console.log('Pushed')
     this.setState({
       modalOpen: true,
       postToBeEdited: post
+    })
+  }
+
+  showCommentEditForm = (comment) => {
+    // console.log('Pushed')
+    this.setState({
+      commentModelOpen: true,
+      commentToBeEdited: comment
     })
   }
 
@@ -283,13 +364,14 @@ export default class App extends Component {
       if (response.status === 200) {
         response.json()
         .then(body => {
-          // console.log(body, body.data.id)
+          console.log(body.data.id)
           this.setState({
             userLoggedIn: true,
             currentUserId: body.data.id
           })
         })
         this.getPosts()
+        this.getComments()
         // console.log('A user is currently logged in')
         return response
       }
@@ -304,8 +386,6 @@ export default class App extends Component {
   }
 
   render(){
-    // console.log(this.state.postToBeEdited)
-    // console.log(this.state.currentUserId)
     return (
       <>
         {/* REGISTER/LOGIN/LOGOUT */}
@@ -317,7 +397,7 @@ export default class App extends Component {
         {/* MAIN PAGE */}
         <hr />
         {this.state.books && <Books />}
-        {this.state.posts && <MainPost posts={this.state.posts} showEditForm={this.showEditForm} modal={this.state.modalOpen} handleChange={this.handleChange} postToBeEdited={this.state.postToBeEdited} handleSubmit={this.handleSubmit} username={this.state.username} currentUserId={this.state.currentUserId} delete={this.deletePost}/>}
+        {this.state.posts && <MainPost posts={this.state.posts} showEditForm={this.showEditForm} modal={this.state.modalOpen} handleChange={this.handleChange} postToBeEdited={this.state.postToBeEdited} handleSubmit={this.handleSubmit} username={this.state.username} currentUserId={this.state.currentUserId} delete={this.deletePost} comment={this.setButton3} comments={this.state.comments} commentEdit={this.showCommentEditForm} deleteComment={this.deleteComment} commentModal={this.state.commentModelOpen} submitCommentEdit={this.handleCommentEdit} commentToBeEdited={this.state.commentToBeEdited}/>}
         <hr />
         {this.state.userLoggedIn && <NewPost handleChange={this.handleChange} handleSubmit={this.handleSubmitNew} userLoggedIn={this.state.userLoggedIn} baseURL={this.state.baseURL}/>}
       </>
