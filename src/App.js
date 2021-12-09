@@ -17,7 +17,8 @@ export default class App extends Component {
     this.state ={
       baseURL: 'http://localhost:8000',
       modalOpen: false, 
-      commentModelOpen: false,
+      newCommentModalOpen: false,
+      commentModalOpen: false,
       userLoggedIn: false,
       loggedButton: false,
       commentButton: false,
@@ -30,10 +31,12 @@ export default class App extends Component {
       comments: [],
       title: '',
       post: '',
+      comment: '',
       books: false,
       regButton: false,
       postToBeEdited: null,
-      commentToBeEditd: null
+      commentToBeEditd: null,
+      postToAddComment: null
     }
   }
 
@@ -109,6 +112,14 @@ export default class App extends Component {
     copyPosts.push(newPost)
     this.setState({
       posts: copyPosts
+    })
+  }
+
+  addComment = (newComment) => {
+    const copyComments = [...this.state.comments]
+    copyComments.push(newComment)
+    this.setState({
+      comments: copyComments
     })
   }
 
@@ -199,7 +210,7 @@ export default class App extends Component {
         copyComments[findIndex] = updatedComment
         this.setState({
           comments: copyComments,
-          commentModelOpen: false})
+          commentModalOpen: false})
         }
     }
     catch(err){
@@ -236,6 +247,35 @@ export default class App extends Component {
     .catch (error => console.log({'Error => ': error}))
 }
 
+handleSubmitNewComment = async (event, id) => {
+  console.log(id)
+  event.preventDefault()
+  event.target.reset()
+  fetch(this.state.baseURL + '/posts/comments/' + id, {
+      method: 'POST',
+      body: JSON.stringify({
+          comment: this.state.comment
+      }),
+      headers: {
+          'Content-Type': 'application/json'
+      },
+      credentials: 'include'
+  })
+  .then (response => {
+      // console.log(response)
+      return response.json()
+  })
+  .then (data => {
+      // console.log(data)
+      this.addComment(data.data)
+      this.setState({
+        comment: '',
+        newCommentModalOpen: false
+      })  
+  })
+  .catch (error => console.log({'Error => ': error}))
+}
+
   handleRegister = (event) => {
     event.preventDefault()
     fetch(this.state.baseURL + '/users/register', {
@@ -243,23 +283,33 @@ export default class App extends Component {
       body: JSON.stringify({
         email: this.state.email,
         username: this.state.username,
-        password: this.state.password}),
+        password: this.state.password
+      }),
       headers: {
         'Content-Type': 'application/json'
       },
       credentials: 'include'
     })
     .then (response => {
-      // console.log(response)
+      console.log(response)
+      if (response.status === 201) {
+        this.setState({
+          userLoggedIn: true
+        })
+      }
       return response.json()
     })
     .then (data => {
-      // console.log(data)
+      console.log('✨ Registration successful! 🎉')
+      console.log(data)
       this.addUser(data)
       this.setState({
         email: '',
-        password: ''
+        password: '',
+        currentUserId: data.data.id,
+        userLoggedIn: true
       })
+      this.checkLoggedIn()
     })
     .catch (
       error => console.log('Error:', error))
@@ -334,11 +384,11 @@ export default class App extends Component {
     })
   }
 
-  setButton3 = () => {
-    this.setState({
-      commentButton: true
-    })
-  }
+  // setButton3 = () => {
+  //   this.setState({
+  //     commentButton: true
+  //   })
+  // }
 
   showEditForm = (post) => {
     // console.log('Pushed')
@@ -350,9 +400,17 @@ export default class App extends Component {
 
   showCommentEditForm = (comment) => {
     // console.log('Pushed')
-    this.setState({
-      commentModelOpen: true,
+    this.setState ({
+      commentModalOpen: true,
       commentToBeEdited: comment
+    })
+  }
+
+  showAddCommentForm = (id) => {
+    console.log('clicked')
+    this.setState ({
+      newCommentModalOpen: true,
+      postToAddComment: id
     })
   }
 
@@ -372,7 +430,7 @@ export default class App extends Component {
         })
         this.getPosts()
         this.getComments()
-        // console.log('A user is currently logged in')
+        console.log(`A user with id ${this.state.currentUserId} is currently logged in`)
         return response
       }
       else {
@@ -389,17 +447,72 @@ export default class App extends Component {
     return (
       <>
         {/* REGISTER/LOGIN/LOGOUT */}
-        <RegisterButton setButton={this.setButton1} button={this.state.regButton} loggedIn={this.state.userLoggedIn}/>
-        <Register regButton={this.state.regButton} loggedIn={this.state.userLoggedIn} change={this.handleChange} register={this.handleRegister} />
-        <LoginButton button={this.state.loggedButton} setButton={this.setButton2} loggedIn={this.state.userLoggedIn}/>
-        <Login login={this.loginUser} change={this.handleChange} loggedIn={this.state.userLoggedIn} button={this.state.loggedButton} />
-        <Logout logout={this.logoutUser} loggedIn={this.state.userLoggedIn} regButton={this.state.regButton} />
+        <RegisterButton 
+          setButton={this.setButton1} 
+          button={this.state.regButton} 
+          loggedIn={this.state.userLoggedIn}
+        />
+        <Register 
+          regButton={this.state.regButton} 
+          loggedIn={this.state.userLoggedIn} 
+          change={this.handleChange} 
+          register={this.handleRegister} 
+        />
+        <LoginButton 
+          button={this.state.loggedButton} 
+          setButton={this.setButton2} 
+          loggedIn={this.state.userLoggedIn}
+        />
+        <Login 
+          login={this.loginUser} 
+          change={this.handleChange} 
+          loggedIn={this.state.userLoggedIn} 
+          button={this.state.loggedButton} 
+        />
+        <Logout 
+          logout={this.logoutUser} 
+          loggedIn={this.state.userLoggedIn} 
+          regButton={this.state.regButton} 
+        />
         {/* MAIN PAGE */}
         <hr />
         {this.state.books && <Books />}
-        {this.state.posts && <MainPost posts={this.state.posts} showEditForm={this.showEditForm} modal={this.state.modalOpen} handleChange={this.handleChange} postToBeEdited={this.state.postToBeEdited} handleSubmit={this.handleSubmit} username={this.state.username} currentUserId={this.state.currentUserId} delete={this.deletePost} comment={this.setButton3} comments={this.state.comments} commentEdit={this.showCommentEditForm} deleteComment={this.deleteComment} commentModal={this.state.commentModelOpen} submitCommentEdit={this.handleCommentEdit} commentToBeEdited={this.state.commentToBeEdited}/>}
+        {this.state.posts && 
+          <MainPost 
+            posts={this.state.posts} 
+            showEditForm={this.showEditForm} 
+            modal={this.state.modalOpen} 
+            handleChange={this.handleChange} 
+            postToBeEdited={this.state.postToBeEdited} 
+            handleSubmit={this.handleSubmit} 
+            username={this.state.username} 
+            currentUserId={this.state.currentUserId} 
+            delete={this.deletePost} 
+            // comment={this.setButton3} 
+            comments={this.state.comments}
+            // Edit Comments 
+            commentEdit={this.showCommentEditForm} 
+            deleteComment={this.deleteComment} 
+            commentModal={this.state.commentModalOpen} 
+            submitCommentEdit={this.handleCommentEdit} 
+            commentToBeEdited={this.state.commentToBeEdited}
+            // Add New Comments
+            newCommentModal={this.state.newCommentModalOpen}
+            showNewCommentForm={this.showAddCommentForm}
+            handleSubmitNewComment={this.handleSubmitNewComment}
+            postToAddComment={this.state.postToAddComment}
+            comment={this.state.comment}
+          />
+        }
         <hr />
-        {this.state.userLoggedIn && <NewPost handleChange={this.handleChange} handleSubmit={this.handleSubmitNew} userLoggedIn={this.state.userLoggedIn} baseURL={this.state.baseURL}/>}
+        {this.state.userLoggedIn && 
+          <NewPost 
+            handleChange={this.handleChange} 
+            handleSubmit={this.handleSubmitNew} 
+            userLoggedIn={this.state.userLoggedIn} 
+            baseURL={this.state.baseURL}
+          />
+        }
       </>
     )
   }

@@ -12,7 +12,6 @@ export default class MainPost extends Component {
         return (
         <React.Fragment>
             <h1 className='text-2xl font-semibold'>Welcome to the Book Forum</h1>
-            {/* <img id='forumpic' alt='forumpic' src='https://i.imgur.com/z4yVvjl.png' /> */}
            {this.props.posts.map((post, i) => {
                 return (
                 <>
@@ -51,14 +50,31 @@ export default class MainPost extends Component {
                             </div>
                         </div> 
                     }
-                    <button onClick={() => this.props.comment} className='bg-gray-500 text-white font-bold py-1 px-1 rounded-full'>Add Comment</button>
-                    <br/ ><strong><u>Comments</u></strong>
+                    {
+                        <>
+                            <button type='submit' onClick={(event) => this.props.showNewCommentForm(post.id)} className='bg-gray-500 text-white font-bold py-1 px-1 rounded-full'>Add Comment</button> 
+                        </>
+                    }
+                    {   (this.props.newCommentModal &&  post.id === this.props.postToAddComment) &&
+                        <div id='modalbg'>
+                            <div id='modalmain'>
+                                <form onSubmit={(event) => {this.props.handleSubmitNewComment(event, post.id)}}>
+                                    <label>Comment: </label>
+                                    <input 
+                                        name='comment'
+                                        onChange={this.props.handleChange}    
+                                    />
+                                    <button className='bg-gray-500 text-white font-bold py-1 px-1 rounded-full'>Add Comment</button>
+                                </form> 
+                            </div>
+                        </div> 
+                    }
                     {
                         this.props.comments.map((comment, i) => {
                             if (post.id === comment.postid.id){
                                 return (
                                 <>
-                                <li>{comment.comment}</li>
+                                <li>{comment.comment}
                                 {
                                     comment.author.id === this.props.currentUserId && 
                                     <button onClick={() => this.props.commentEdit(comment)}><img width='13px' alt='edit button' src='https://i.imgur.com/Wie5RHb.png' /></button>
@@ -74,14 +90,13 @@ export default class MainPost extends Component {
                                                 <label>Comment: </label>
                                                 <input 
                                                     name='comment'
-                                                    defaultValue={this.props.commentToBeEdited.comment}
                                                     onChange={this.props.handleChange}  
                                                 /><br />
                                                 <button className='bg-gray-500 text-white font-bold py-1 px-1 rounded-full'>Update</button>
                                             </form> 
                                         </div>
                                     </div> 
-                                }
+                                }</li>
                                 </>
                                 )
                             } else {
