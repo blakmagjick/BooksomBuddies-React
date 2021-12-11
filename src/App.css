@@ -42,7 +42,11 @@ button {
   border-top: 2px dashed grey;
 }
 
-/* #forumpic {
-  margin-left: auto;
-  margin-right: auto;
-} */
+.profiles {
+  display: inline-block;
+  margin-right: 15px;
+}
+
+#title {
+  color: white;
+}
