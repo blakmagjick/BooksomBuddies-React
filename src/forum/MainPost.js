@@ -11,7 +11,7 @@ export default class MainPost extends Component {
     render () {
         return (
         <React.Fragment>
-            <h1 className='text-2xl font-semibold'>Welcome to the Book Forum</h1>
+            <h1>Welcome to the Book Forum</h1>
            {this.props.posts.map((post, i) => {
                 return (
                 <>
@@ -45,14 +45,14 @@ export default class MainPost extends Component {
                                         defaultValue={this.props.postToBeEdited.post}
                                         onChange={this.props.handleChange}  
                                     /><br />
-                                    <button className='bg-gray-500 text-white font-bold py-1 px-1 rounded-full'>Update</button>
+                                    <button>Update</button>
                                 </form> 
                             </div>
                         </div> 
                     }
                     {
                         <>
-                            <button type='submit' onClick={(event) => this.props.showNewCommentForm(post.id)} className='bg-gray-500 text-white font-bold py-1 px-1 rounded-full'>Add Comment</button> 
+                            <button type='submit' onClick={(event) => this.props.showNewCommentForm(post.id)}>Add Comment</button> 
                         </>
                     }
                     {   (this.props.newCommentModal &&  post.id === this.props.postToAddComment) &&
@@ -64,7 +64,7 @@ export default class MainPost extends Component {
                                         name='comment'
                                         onChange={this.props.handleChange}    
                                     />
-                                    <button className='bg-gray-500 text-white font-bold py-1 px-1 rounded-full'>Add Comment</button>
+                                    <button>Add Comment</button>
                                 </form> 
                             </div>
                         </div> 
@@ -92,7 +92,7 @@ export default class MainPost extends Component {
                                                     name='comment'
                                                     onChange={this.props.handleChange}  
                                                 /><br />
-                                                <button className='bg-gray-500 text-white font-bold py-1 px-1 rounded-full'>Update</button>
+                                                <button>Update</button>
                                             </form> 
                                         </div>
                                     </div> 

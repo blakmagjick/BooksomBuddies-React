@@ -12,7 +12,7 @@ export default class Books extends Component {
         return (
             <React.Fragment>
                 <br />
-                <h1 className='text-2xl font-semibold'>Books</h1>
+                <h1>Books</h1>
             </React.Fragment>
         )
     }

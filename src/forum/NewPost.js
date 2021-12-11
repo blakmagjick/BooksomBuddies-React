@@ -5,7 +5,7 @@ export default function NewPost (props) {
     if (loggedIn)
     return(
         <React.Fragment>
-            <h1 className='text-xl font-semibold'>Create New Post</h1>
+            <h1>Create New Post</h1>
             <form id='newpostform' onSubmit={props.handleSubmit}>
                 <label>Title: </label>
                 <input 
@@ -21,7 +21,7 @@ export default function NewPost (props) {
                     name='post'
                     onChange={(event) => props.handleChange(event)}
                 /><br /><br />
-                <input className='bg-gray-500 text-white font-bold py-1 px-1 rounded-full' type='submit' value='Add Post' />
+                <input type='submit' value='Add Post' />
             </form>
         </React.Fragment>
     )
