@@ -287,11 +287,11 @@ export default class App extends Component {
       credentials: 'include'
   })
   .then (response => {
-      // console.log(response)
+      console.log('This is the response', response)
       return response.json()
   })
   .then (data => {
-      // console.log(data)
+      console.log(data)
       this.addComment(data.data)
       this.setState({
         comment: '',
