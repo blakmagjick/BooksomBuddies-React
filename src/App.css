@@ -12,6 +12,12 @@ button {
   margin: 5px;
 }
 
+li {
+  list-style-type: none;
+  padding: 0;
+  margin: 0; 
+}
+
 #modalbg {
   background: rgba(0, 0, 0, .2);
   position: fixed;
@@ -49,4 +55,19 @@ button {
 
 #title {
   color: white;
+  font-weight: bolder;
+  margin: 0;
+  padding: 0;
+}
+
+#post {
+  margin: 0;
+  padding: 0;
+  font-size: 1.2em;
+}
+
+#author {
+  margin: 0;
+  padding: 0;
+  font-size: 13px;
 }

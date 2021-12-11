@@ -16,18 +16,18 @@ export default class MainPost extends Component {
                 return (
                 <>
                 <hr id='postlines' />
-                    <ul key={i}>
-                        <li key={post.id + '_title'} id='title'>Title: {post.title}</li><br />
-                        <li key={post.id + '_post'} id='post'>Post: {post.post}</li><br />
-                        <li key={post.id + '_author'} id='author'>Name: {post.author.username}</li><br />
-                    </ul> 
+                    <div key={i}>
+                        <h4 key={post.id + '_title'} id='title'>{post.title}</h4><br />
+                        <p key={post.id + '_post'} id='post'>Post: {post.post}</p><br />
+                        <p key={post.id + '_author'} id='author'>Posted by: {post.author.username} on {post.date}</p><br />
+                    </div>
                     {
                         post.author.id === this.props.currentUserId && 
-                        <button class='btn btn-secondary btn-sm' onClick={() => this.props.showEditForm(post)}><img width='18px' alt='edit button' src='https://i.imgur.com/Wie5RHb.png' /></button> 
+                        <button class='btn btn-secondary btn-sm' onClick={() => this.props.showEditForm(post)}><img width='15px' alt='edit button' src='https://i.imgur.com/Wie5RHb.png' /></button> 
                     }
                     {
                         post.author.id === this.props.currentUserId && 
-                        <button type='submit' class='btn btn-secondary btn-sm' onClick={() => this.props.delete(post.id)}><img width='18px' alt='delete button' src='https://i.imgur.com/1uWeVvr.png' /></button> 
+                        <button type='submit' class='btn btn-secondary btn-sm' onClick={() => this.props.delete(post.id)}><img width='15px' alt='delete button' src='https://i.imgur.com/1uWeVvr.png' /></button> 
                     }
                     {   this.props.modal &&  
                         <div id='modalbg'>
@@ -51,7 +51,7 @@ export default class MainPost extends Component {
                         </div> 
                     }
                     {
-                        <>
+                        <><br />
                             <button class='btn btn-secondary btn-sm' type='submit' onClick={(event) => this.props.showNewCommentForm(post.id)}>Add Comment</button> 
                         </>
                     }

@@ -8,7 +8,7 @@ import Login from './users/Login'
 import LoginButton from './users/LoginButton'
 import Logout from './users/Logout'
 
-import Profile from './books/Profile'
+import Profiles from './books/Profiles'
 import Books from './books/Books'
 
 import MainPost from './forum/MainPost'
@@ -541,7 +541,7 @@ export default class App extends Component {
           />
         }
         {(this.state.userLoggedIn && this.state.profileButton) && 
-        <Profile
+        <Profiles
           profiles={this.state.profiles}
          />
         }
