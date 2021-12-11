@@ -10,14 +10,14 @@ export default function NewPost (props) {
                 <label>Title: </label>
                 <input 
                     type='text'
-                    id='title'
+                    id='formtitle'
                     name='title'
                     onChange={(event) => props.handleChange(event)}
                 /><br />
                 <label>Post: </label>
                 <input 
                     type='text'
-                    id='post'
+                    id='formpost'
                     name='post'
                     onChange={(event) => props.handleChange(event)}
                 /><br /><br />

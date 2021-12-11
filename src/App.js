@@ -18,7 +18,7 @@ export default class App extends Component {
   constructor(){
     super()
     this.state = {
-      baseURL: 'http://localhost:8000',
+      baseURL: process.env.REACT_APP_BASEURL,
       modalOpen: false, 
       newCommentModalOpen: false,
       commentModalOpen: false,
