@@ -80,7 +80,7 @@ export default class MainPost extends Component {
                                     <button onClick={() => this.props.commentEdit(comment)}><img width='13px' alt='edit button' src='https://i.imgur.com/Wie5RHb.png' /></button>
                                 }
                                 {
-                                    comment.author.id === this.props.currentUserId && 
+                                    (comment.author.id === this.props.currentUserId || post.author.id === this.props.currentUserId) && 
                                     <button type='submit' onClick={() => this.props.deleteComment(comment.id)}><img width='13px' alt='delete button' src='https://i.imgur.com/1uWeVvr.png' /></button> 
                                 }
                                 {   this.props.commentModal &&  

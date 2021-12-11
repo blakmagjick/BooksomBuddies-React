@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import './App.css';
+import NavBar from './NavBar'
+
 import Register from './users/Register'
 import RegisterButton from './users/RegisterButton';
 import Login from './users/Login'
 import LoginButton from './users/LoginButton'
 import Logout from './users/Logout'
 
+import Profile from './books/Profile'
 import Books from './books/Books'
 
 import MainPost from './forum/MainPost'
@@ -14,12 +17,14 @@ import NewPost from './forum/NewPost'
 export default class App extends Component {
   constructor(){
     super()
-    this.state ={
+    this.state = {
       baseURL: 'http://localhost:8000',
       modalOpen: false, 
       newCommentModalOpen: false,
       commentModalOpen: false,
       userLoggedIn: false,
+      profileButton: false,
+      forumButton: false,
       loggedButton: false,
       commentButton: false,
       currentUserId: null,
@@ -29,6 +34,7 @@ export default class App extends Component {
       users: [],
       posts: [],
       comments: [],
+      profiles: [],
       title: '',
       post: '',
       comment: '',
@@ -96,6 +102,25 @@ export default class App extends Component {
         this.setState({
           comments: data.data
         })
+    })
+  }
+
+  getProfiles = () => {
+    fetch(this.state.baseURL + '/users/profiles', {
+      credentials: 'include'
+    })
+    .then (response => {
+      if (response.status === 200) {
+        return response.json()
+      } else {
+        return []
+      }  
+    })
+    .then(data => {
+      console.log(data)
+      this.setState({
+        profiles: data.data
+      })
     })
   }
 
@@ -245,9 +270,9 @@ export default class App extends Component {
         })  
     })
     .catch (error => console.log({'Error => ': error}))
-}
+  }
 
-handleSubmitNewComment = async (event, id) => {
+  handleSubmitNewComment = async (event, id) => {
   console.log(id)
   event.preventDefault()
   event.target.reset()
@@ -274,7 +299,7 @@ handleSubmitNewComment = async (event, id) => {
       })  
   })
   .catch (error => console.log({'Error => ': error}))
-}
+  }
 
   handleRegister = (event) => {
     event.preventDefault()
@@ -384,11 +409,19 @@ handleSubmitNewComment = async (event, id) => {
     })
   }
 
-  // setButton3 = () => {
-  //   this.setState({
-  //     commentButton: true
-  //   })
-  // }
+  profileButton = () => {
+    this.setState({
+      profileButton: true,
+      forumButton: false
+    })
+  }
+
+  forumButton = () => {
+    this.setState({
+      forumButton: true,
+      profileButton: false
+    })
+  }
 
   showEditForm = (post) => {
     // console.log('Pushed')
@@ -430,6 +463,7 @@ handleSubmitNewComment = async (event, id) => {
         })
         this.getPosts()
         this.getComments()
+        this.getProfiles()
         console.log(`A user with id ${this.state.currentUserId} is currently logged in`)
         return response
       }
@@ -474,10 +508,13 @@ handleSubmitNewComment = async (event, id) => {
           loggedIn={this.state.userLoggedIn} 
           regButton={this.state.regButton} 
         />
+        {this.state.userLoggedIn && 
+          <NavBar profileButton={this.profileButton} forumButton={this.forumButton} />
+        }
         {/* MAIN PAGE */}
         <hr />
         {this.state.books && <Books />}
-        {this.state.posts && 
+        {(this.state.posts && this.state.forumButton) && 
           <MainPost 
             posts={this.state.posts} 
             showEditForm={this.showEditForm} 
@@ -488,7 +525,6 @@ handleSubmitNewComment = async (event, id) => {
             username={this.state.username} 
             currentUserId={this.state.currentUserId} 
             delete={this.deletePost} 
-            // comment={this.setButton3} 
             comments={this.state.comments}
             // Edit Comments 
             commentEdit={this.showCommentEditForm} 
@@ -504,8 +540,13 @@ handleSubmitNewComment = async (event, id) => {
             comment={this.state.comment}
           />
         }
+        {(this.state.userLoggedIn && this.state.profileButton) && 
+        <Profile
+          profiles={this.state.profiles}
+         />
+        }
         <hr />
-        {this.state.userLoggedIn && 
+        {(this.state.userLoggedIn && this.state.forumButton) && 
           <NewPost 
             handleChange={this.handleChange} 
             handleSubmit={this.handleSubmitNew} 
