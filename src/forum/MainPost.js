@@ -11,11 +11,11 @@ export default class MainPost extends Component {
     render () {
         return (
         <React.Fragment>
-            <h2>Welcome to the Book Forum</h2>
+            {/* <h2>Welcome to the Book Forum</h2> */}
            {this.props.posts.map((post, i) => {
                 return (
                 <>
-                <hr id='postlines' />
+                {/* <hr id='postlines' /> */}
                     <div key={i}>
                         <h4 key={post.id + '_title'} id='title'>{post.title}</h4><br />
                         <p key={post.id + '_post'} id='post'>{post.post}</p><br />
@@ -23,11 +23,11 @@ export default class MainPost extends Component {
                     </div>
                     {
                         post.author.id === this.props.currentUserId && 
-                        <button class='border border-secondary btn btn-secondary-outline btn-sm' onClick={() => this.props.showEditForm(post)}><img width='15px' alt='edit button' src='https://i.imgur.com/Wie5RHb.png' /></button> 
+                        <button className='border border-secondary btn btn-secondary-outline btn-sm' onClick={() => this.props.showEditForm(post)}><img width='15px' alt='edit button' src='https://i.imgur.com/Wie5RHb.png' /></button> 
                     }
                     {
                         post.author.id === this.props.currentUserId && 
-                        <button type='submit' class='border border-secondary btn btn-secondary-outline btn-sm' onClick={() => this.props.delete(post.id)}><img width='15px' alt='delete button' src='https://i.imgur.com/1uWeVvr.png' /></button> 
+                        <button type='submit' className='border border-secondary btn btn-secondary-outline btn-sm' onClick={() => this.props.delete(post.id)}><img width='15px' alt='delete button' src='https://i.imgur.com/1uWeVvr.png' /></button> 
                     }
                     {   this.props.modal &&  
                         <div id='modalbg'>
@@ -45,7 +45,7 @@ export default class MainPost extends Component {
                                         defaultValue={this.props.postToBeEdited.post}
                                         onChange={this.props.handleChange}  
                                     /><br />
-                                    <button class='btn btn-secondary btn-sm'>Update</button>
+                                    <button className='btn btn-secondary btn-sm'>Update</button>
                                 </form> 
                             </div>
                         </div> 
@@ -58,16 +58,16 @@ export default class MainPost extends Component {
                             if (post.id === comment.postid.id){
                                 return (
                                 <>
-                                <li id='comments'>
+                                <li key={i} id='comments'>
                                     {comment.comment}<br />
                                     <span id='author'>Post by: {comment.author.username} on {comment.date}</span>
                                 {
                                     comment.author.id === this.props.currentUserId && 
-                                    <button class='border border-secondary btn btn-secondary-outline btn-sm' onClick={() => this.props.commentEdit(comment)}><img width='13px' alt='edit button' src='https://i.imgur.com/Wie5RHb.png' /></button>
+                                    <button className='border border-secondary btn btn-secondary-outline btn-sm' onClick={() => this.props.commentEdit(comment)}><img width='13px' alt='edit button' src='https://i.imgur.com/Wie5RHb.png' /></button>
                                 }
                                 {
                                     (comment.author.id === this.props.currentUserId || post.author.id === this.props.currentUserId) && 
-                                    <button class='border border-secondary btn btn-secondary-outline btn-sm' type='submit' onClick={() => this.props.deleteComment(comment.id)}><img width='13px' alt='delete button' src='https://i.imgur.com/1uWeVvr.png' /></button> 
+                                    <button className='border border-secondary btn btn-secondary-outline btn-sm' type='submit' onClick={() => this.props.deleteComment(comment.id)}><img width='13px' alt='delete button' src='https://i.imgur.com/1uWeVvr.png' /></button> 
                                 }
                                 {   this.props.commentModal &&  
                                     <div id='modalbg'>
@@ -78,7 +78,7 @@ export default class MainPost extends Component {
                                                     name='comment'
                                                     onChange={this.props.handleChange}  
                                                 /><br />
-                                                <button class='btn btn-secondary btn-sm'>Update</button>
+                                                <button className='btn btn-secondary btn-sm'>Update</button>
                                             </form> 
                                         </div>
                                     </div> 
@@ -87,14 +87,14 @@ export default class MainPost extends Component {
                                 )
                             } else {
                                 return (
-                                    <p></p>
+                                    ''
                                 )
                             }
                         })
                     }
                     {
                         <><br />
-                            <button class='btn btn-secondary btn-sm' type='submit' onClick={(event) => this.props.showNewCommentForm(post.id)}>Add Comment</button> 
+                            <button className='btn btn-secondary btn-sm' type='submit' onClick={(event) => this.props.showNewCommentForm(post.id)}>Add Comment</button> 
                         </>
                     }
                     {   (this.props.newCommentModal &&  post.id === this.props.postToAddComment) &&
@@ -106,11 +106,15 @@ export default class MainPost extends Component {
                                         name='comment'
                                         onChange={this.props.handleChange}    
                                     />
-                                    <button class='btn btn-secondary btn-sm'>Add Comment</button>
+                                    <button className='btn btn-secondary btn-sm'>Add Comment</button>
                                 </form> 
                             </div>
                         </div> 
                     }
+                    {
+                        <hr id='postlines' />
+                    }
+
                 </>    
                     ) 
                 })

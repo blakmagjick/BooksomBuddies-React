@@ -24,7 +24,7 @@ export default class App extends Component {
       commentModalOpen: false,
       userLoggedIn: false,
       profileButton: false,
-      forumButton: false,
+      forumButton: true,
       loggedButton: false,
       commentButton: false,
       currentUserId: null,
@@ -514,7 +514,7 @@ export default class App extends Component {
         {/* MAIN PAGE */}
         <hr />
         {this.state.books && <Books />}
-        {(this.state.posts && this.state.forumButton) && 
+        {(this.state.posts && this.state.forumButton && this.state.userLoggedIn) && 
           <MainPost 
             posts={this.state.posts} 
             showEditForm={this.showEditForm} 

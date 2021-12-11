@@ -3,7 +3,7 @@ export default function RegisterButton (props) {
     const loggedIn = props.loggedIn
     if (button === false && loggedIn === false)
     return (
-        <button class='btn btn-secondary btn-sm' onClick={props.setButton}>Register</button>
+        <button className='btn btn-secondary btn-sm' onClick={props.setButton}>Register</button>
     )
     else 
     return (

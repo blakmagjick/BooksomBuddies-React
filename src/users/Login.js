@@ -19,7 +19,7 @@ export default function Login (props) {
                     name='password'
                     onChange={(event) => props.change(event)}
                 />
-                <input class='btn btn-secondary btn-sm' type='button' value='Login' id='loginsubmit' onClick={props.login} />
+                <input className='btn btn-secondary btn-sm' type='button' value='Login' id='loginsubmit' onClick={props.login} />
             </form>
         </>
     )

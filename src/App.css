@@ -14,7 +14,7 @@ button {
 
 li {
   list-style-type: none;
-  padding: 0;
+  /* padding: 10px; */
   margin-left: 25px; 
 }
 
@@ -74,7 +74,8 @@ li {
 
 #comments {
   border: 1px dashed grey;
-  padding: 3px;
+  margin-bottom: 15px;
+  padding: 5px;
 }
 
 h6 {

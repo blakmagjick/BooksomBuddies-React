@@ -21,7 +21,7 @@ export default function NewPost (props) {
                     name='post'
                     onChange={(event) => props.handleChange(event)}
                 /><br /><br />
-                <input class='btn btn-secondary btn-sm' type='submit' value='Add Post' />
+                <input className='btn btn-secondary btn-sm' type='submit' value='Add Post' />
             </form>
         </React.Fragment>
     )

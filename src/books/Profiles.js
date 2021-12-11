@@ -10,7 +10,7 @@ export default class Profile extends Component {
     render () {
         return (
             <React.Fragment>
-            <p>Profiles</p>
+            <h4>Profiles</h4>
                 {this.props.profiles.map((profile, i) => {
                     return (
                         <>

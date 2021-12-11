@@ -12,8 +12,8 @@ export default class NavBar extends Component {
         return (
             <React.Fragment>
                 <hr />
-                    <button class='btn btn-secondary btn-sm' onClick={this.props.profileButton}>Profiles</button>
-                    <button class='btn btn-secondary btn-sm' onClick={this.props.forumButton}>Book Forum</button>
+                    <button className='btn btn-secondary btn-sm' onClick={this.props.forumButton}>Book Forum</button>
+                    <button className='btn btn-secondary btn-sm' onClick={this.props.profileButton}>Profiles</button>
             </React.Fragment>
         )
     }
