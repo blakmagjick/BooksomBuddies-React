@@ -5,7 +5,7 @@ export default function NewPost (props) {
     if (loggedIn)
     return(
         <React.Fragment>
-            <h1>Create New Post</h1>
+            <h2>Create New Post</h2>
             <form id='newpostform' onSubmit={props.handleSubmit}>
                 <label>Title: </label>
                 <input 
