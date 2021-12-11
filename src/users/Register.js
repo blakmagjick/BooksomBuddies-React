@@ -26,7 +26,7 @@ export default function Register (props) {
                     name='password'
                     onChange={(event) => props.change(event)}
                 />
-                <input type='button' value='Register' id='regsubmit' onClick={props.register} />
+                <input class='btn btn-secondary btn-sm' type='button' value='Register' id='regsubmit' onClick={props.register} />
             </form>
         </>
     )

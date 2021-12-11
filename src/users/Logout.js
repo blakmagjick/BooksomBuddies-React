@@ -3,7 +3,7 @@ export default function Logout (props) {
     if (logoutbutton)
     return (
         <>
-            <button onClick={props.logout}>Logout</button>
+            <button class='btn btn-secondary btn-sm' onClick={props.logout}>Logout</button>
         </>
     )
     else
