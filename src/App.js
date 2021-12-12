@@ -464,7 +464,7 @@ export default class App extends Component {
         this.getPosts()
         this.getComments()
         this.getProfiles()
-        console.log(`A user with id ${this.state.currentUserId} is currently logged in`)
+        console.log(`A user is currently logged in`)
         return response
       }
       else {
@@ -478,6 +478,7 @@ export default class App extends Component {
   }
 
   render(){
+    // console.log(this.state.currentUserId)
     return (
       <>
         {/* REGISTER/LOGIN/LOGOUT */}
