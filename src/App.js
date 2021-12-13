@@ -22,6 +22,7 @@ export default class App extends Component {
       modalOpen: false, 
       newCommentModalOpen: false,
       commentModalOpen: false,
+      profileModalOpen: false,
       userLoggedIn: false,
       profileButton: false,
       forumButton: true,
@@ -42,6 +43,7 @@ export default class App extends Component {
       regButton: false,
       postToBeEdited: null,
       commentToBeEditd: null,
+      profileToBeEdited: null,
       postToAddComment: null
     }
   }
@@ -162,6 +164,20 @@ export default class App extends Component {
     })
   }
 
+  deleteProfile = (id) => {
+    fetch(this.state.baseURL + '/users/profile/' + id, {
+      method: 'DELETE'
+    })
+    .then (response => {
+      const findIndex = this.state.profiles.findIndex(profile => profile.id === id)
+      const copyProfiles = [...this.state.profiles]
+      copyProfiles.splice(findIndex, 1)
+      this.setState({
+        profiles: copyProfiles
+      })
+    })
+  }
+
   deleteComment = (id) => {
     fetch(this.state.baseURL + '/posts/comments/' + id, {
       method: 'DELETE'
@@ -236,6 +252,40 @@ export default class App extends Component {
         this.setState({
           comments: copyComments,
           commentModalOpen: false})
+        }
+    }
+    catch(err){
+      console.log('Error =>', err);
+      }
+  }
+
+  handleProfileEdit = async (event) => {
+    // console.log(this.state.postToBeEdited.name.username)
+    event.preventDefault()
+    const URL = this.state.baseURL + '/users/profile/' + this.state.profileToBeEdited.id
+    try {const response = await fetch(URL, {
+      method: 'PUT',
+      body: JSON.stringify({
+        name: event.target.name.value,
+        profilepic: event.target.profilepic.value,
+        location: event.target.location.value,
+        favebook: event.target.favebook.value,
+        wishlist: event.target.wishlist.value
+      }),
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      credentials: 'include'
+    })
+      if (response.status === 200){
+        const updatedProfile = (await response.json()).data
+        console.log(updatedProfile)
+        const findIndex = this.state.profiles.findIndex(profile => profile.id === updatedProfile.id)
+        const copyProfiles = [...this.state.profiles]
+        copyProfiles[findIndex] = updatedProfile
+        this.setState({
+          profiles: copyProfiles,
+          profileModalOpen: false})
         }
     }
     catch(err){
@@ -439,6 +489,14 @@ export default class App extends Component {
     })
   }
 
+  showProfileEditForm = (profile) => {
+    // console.log('Pushed')
+    this.setState ({
+      profileModalOpen: true,
+      profileToBeEdited: profile
+    })
+  }
+
   showAddCommentForm = (id) => {
     console.log('clicked')
     this.setState ({
@@ -544,6 +602,12 @@ export default class App extends Component {
         {(this.state.userLoggedIn && this.state.profileButton) && 
         <Profiles
           profiles={this.state.profiles}
+          profileModal={this.state.profileModalOpen}
+          submitProfileEdit={this.handleProfileEdit}
+          profileToBeEdited={this.state.profileToBeEdited}
+          profileEdit={this.showProfileEditForm}
+          deleteProfile={this.deleteProfile}
+          handleChange={this.handleChange} 
          />
         }
         <hr />
