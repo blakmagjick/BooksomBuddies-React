@@ -8,6 +8,7 @@ import Login from './users/Login'
 import LoginButton from './users/LoginButton'
 import Logout from './users/Logout'
 
+import NewProfile from './books/NewProfile'
 import Profiles from './books/Profiles'
 import Books from './books/Books'
 
@@ -322,6 +323,36 @@ export default class App extends Component {
     .catch (error => console.log({'Error => ': error}))
   }
 
+  // handleProfileSubmit = async (event, id) => {
+  //   console.log(id)
+  //   event.preventDefault()
+  //   event.target.reset()
+  //   fetch(this.state.baseURL + '/posts/comments/' + id, {
+  //       method: 'POST',
+  //       body: JSON.stringify({
+  //           comment: this.state.comment
+  //       }),
+  //       headers: {
+  //           'Content-Type': 'application/json'
+  //       },
+  //       credentials: 'include'
+  //   })
+  //   .then (response => {
+  //       console.log('This is the response', response)
+  //       return response.json()
+  //   })
+  //   .then (data => {
+  //       console.log(data)
+  //       this.addComment(data.data)
+  //       this.setState({
+  //         comment: '',
+  //         newCommentModalOpen: false
+  //       })  
+  //   })
+  //   .catch (error => console.log({'Error => ': error}))
+  //   }
+  
+
   handleSubmitNewComment = async (event, id) => {
   console.log(id)
   event.preventDefault()
@@ -609,6 +640,13 @@ export default class App extends Component {
           deleteProfile={this.deleteProfile}
           handleChange={this.handleChange} 
          />
+        }
+        {
+          (this.state.userLoggedIn && this.state.profileButton) && 
+          <NewProfile 
+            userLoggedIn={this.state.userLoggedIn} 
+            handleProfileSubmit={this.handleProfileSubmit}
+          />
         }
         <hr />
         {(this.state.userLoggedIn && this.state.forumButton) && 
