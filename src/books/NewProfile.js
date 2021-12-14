@@ -6,36 +6,37 @@ export default function NewProfile (props) {
     return(
         <React.Fragment>
             <h2>Create New Profile</h2>
-            <form id='newpostform' onSubmit={props.handleProfileSubmit}>
-                <label>Name: </label>
+            <div id='newformdiv'>
+            <form onSubmit={props.handleProfileSubmit}>
+                <label id='newformdiv'>Name:  </label>
                 <input 
                     type='text'
                     id='formname'
                     name='name'
                     onChange={(event) => props.handleChange(event)}
                 /><br />
-                <label>Location: </label>
+                <label id='newformdiv'>Location:  </label>
                 <input 
                     type='text'
                     id='formlocation'
                     name='location'
                     onChange={(event) => props.handleChange(event)}
                 /><br />
-                <label>Profile Pic: </label>
+                <label id='newformdiv'>Profile Pic:  </label>
                 <input 
                     type='text'
                     id='formprofilepic'
                     name='profilepic'
                     onChange={(event) => props.handleChange(event)}
                 /><br />
-                <label>Fave Book: </label>
+                <label id='newformdiv'>Fave Book:  </label>
                 <input 
                     type='text'
                     id='formfavebook'
                     name='favebook'
                     onChange={(event) => props.handleChange(event)}
                 /><br />
-                <label>Wish List: </label>
+                <label id='newformdiv'>Wish List:  </label>
                 <input 
                     type='text'
                     id='formwishlist'
@@ -45,6 +46,7 @@ export default function NewProfile (props) {
                 <br />
                 <input className='btn btn-secondary btn-sm' type='submit' value='Add Profile' />
             </form>
+            </div>
         </React.Fragment>
     )
     else

@@ -82,3 +82,19 @@ h6 {
   color: white;
   padding-top: 10px;
 }
+
+#newformdiv, #newformdiv2 {
+  margin-top:10px;
+  margin-left: 15px;
+}
+#newformdiv2 label {
+  display: inline-block;
+  width: 45px;
+  text-align: left;
+}
+
+#newformdiv label {
+  display: inline-block;
+  width: 85px;
+  text-align: left;
+}
