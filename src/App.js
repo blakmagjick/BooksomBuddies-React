@@ -40,6 +40,11 @@ export default class App extends Component {
       title: '',
       post: '',
       comment: '',
+      name: '',
+      location: '',
+      profilepic: '',
+      favebook: '',
+      wishlist: '',
       books: false,
       regButton: false,
       postToBeEdited: null,
@@ -148,6 +153,14 @@ export default class App extends Component {
     copyComments.push(newComment)
     this.setState({
       comments: copyComments
+    })
+  }
+
+  addProfile = (newProfile) => {
+    const copyProfiles = [...this.state.profiles]
+    copyProfiles.push(newProfile)
+    this.setState({
+      profiles: copyProfiles
     })
   }
 
@@ -323,34 +336,41 @@ export default class App extends Component {
     .catch (error => console.log({'Error => ': error}))
   }
 
-  // handleProfileSubmit = async (event, id) => {
-  //   console.log(id)
-  //   event.preventDefault()
-  //   event.target.reset()
-  //   fetch(this.state.baseURL + '/posts/comments/' + id, {
-  //       method: 'POST',
-  //       body: JSON.stringify({
-  //           comment: this.state.comment
-  //       }),
-  //       headers: {
-  //           'Content-Type': 'application/json'
-  //       },
-  //       credentials: 'include'
-  //   })
-  //   .then (response => {
-  //       console.log('This is the response', response)
-  //       return response.json()
-  //   })
-  //   .then (data => {
-  //       console.log(data)
-  //       this.addComment(data.data)
-  //       this.setState({
-  //         comment: '',
-  //         newCommentModalOpen: false
-  //       })  
-  //   })
-  //   .catch (error => console.log({'Error => ': error}))
-  //   }
+  handleProfileSubmit = async (event, id) => {
+    console.log(id)
+    event.preventDefault()
+    event.target.reset()
+    fetch(this.state.baseURL + '/users/profile/new', {
+        method: 'POST',
+        body: JSON.stringify({
+            name: this.state.name,
+            location: this.state.location,
+            profilepic: this.state.profilepic,
+            favebook: this.state.favebook,
+            wishlist: this.state.wishlist
+        }),
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        credentials: 'include'
+    })
+    .then (response => {
+        console.log('This is the response', response)
+        return response.json()
+    })
+    .then (data => {
+        console.log(data)
+        this.addProfile(data.data)
+        this.setState({
+          name: '',
+          location: '',
+          profilepic: '',
+          favebook: '',
+          wishlist: ''
+        }) 
+    })
+    .catch (error => console.log({'Error => ': error}))
+    }
   
 
   handleSubmitNewComment = async (event, id) => {
@@ -646,6 +666,7 @@ export default class App extends Component {
           <NewProfile 
             userLoggedIn={this.state.userLoggedIn} 
             handleProfileSubmit={this.handleProfileSubmit}
+            handleChange={this.handleChange}
           />
         }
         <hr />
