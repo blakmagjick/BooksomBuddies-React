@@ -659,6 +659,7 @@ export default class App extends Component {
           profileEdit={this.showProfileEditForm}
           deleteProfile={this.deleteProfile}
           handleChange={this.handleChange} 
+          currentUserId={this.state.currentUserId} 
          />
         }
         {
