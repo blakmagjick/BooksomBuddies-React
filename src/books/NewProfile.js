@@ -53,7 +53,7 @@ export default function NewProfile (props) {
     return (
         <React.Fragment>
             <hr />
-            <h4>Login to make a new post.</h4>
+            <h4>Login to create profile.</h4>
         </React.Fragment>
     )
 }

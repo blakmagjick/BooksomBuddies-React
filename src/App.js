@@ -30,6 +30,7 @@ export default class App extends Component {
       loggedButton: false,
       commentButton: false,
       currentUserId: null,
+      currentUserProfile: false,
       email: '',
       username: '',
       password: '',
@@ -366,7 +367,8 @@ export default class App extends Component {
           location: '',
           profilepic: '',
           favebook: '',
-          wishlist: ''
+          wishlist: '',
+          currentUserProfile: true
         }) 
     })
     .catch (error => console.log({'Error => ': error}))
@@ -564,10 +566,11 @@ export default class App extends Component {
       if (response.status === 200) {
         response.json()
         .then(body => {
-          console.log(body.data.id)
+          console.log(body.data)
           this.setState({
             userLoggedIn: true,
-            currentUserId: body.data.id
+            currentUserId: body.data.id,
+            currentUserProfile: body.data.profilemade
           })
         })
         this.getPosts()
@@ -663,7 +666,7 @@ export default class App extends Component {
          />
         }
         {
-          (this.state.userLoggedIn && this.state.profileButton) && 
+          (this.state.userLoggedIn && this.state.profileButton && this.state.currentUserProfile === false) && 
           <NewProfile 
             userLoggedIn={this.state.userLoggedIn} 
             handleProfileSubmit={this.handleProfileSubmit}
