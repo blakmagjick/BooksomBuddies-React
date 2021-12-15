@@ -20,7 +20,6 @@ export default class Profile extends Component {
                             <span>Name: {profile.name}</span><br />
                             <span>Location: {profile.location}</span><br />
                             <span>Fave Book: {profile.favebook}</span><br />
-                            <span>Wish List: {profile.wishlist}</span><br /><br />
                         </div>
                         {
                             profile.username.id === this.props.currentUserId  &&
@@ -61,13 +60,6 @@ export default class Profile extends Component {
                                             name='favebook'
                                             id='profilefavebook'
                                             defaultValue={this.props.profileToBeEdited.favebook}
-                                            onChange={this.props.handleChange}  
-                                        /><br />
-                                        <label>Wish List: </label>
-                                        <input 
-                                            name='wishlist'
-                                            id='profilewishlist'
-                                            defaultValue={this.props.profileToBeEdited.wishlist}
                                             onChange={this.props.handleChange}  
                                         /><br />
                                         <button className='btn btn-secondary btn-sm'>Update</button>

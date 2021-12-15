@@ -1,10 +1,13 @@
 import React from 'react';
+import AddBook from '../books/AddBook'
+
 
 export default function NewProfile (props) {
     const loggedIn = props.userLoggedIn
     if (loggedIn)
     return(
         <React.Fragment>
+        <hr />
             <h2>Create New Profile</h2>
             <div id='newformdiv'>
             <form onSubmit={props.handleProfileSubmit}>
@@ -36,17 +39,14 @@ export default function NewProfile (props) {
                     name='favebook'
                     onChange={(event) => props.handleChange(event)}
                 /><br />
-                <label id='newformdiv'>Wish List:  </label>
-                <input 
-                    type='text'
-                    id='formwishlist'
-                    name='wishlist'
-                    onChange={(event) => props.handleChange(event)}
-                /><br />
                 <br />
                 <input className='btn btn-secondary btn-sm' type='submit' value='Add Profile' />
             </form>
-            </div>
+            </div><br />
+            <AddBook 
+                getBooks={props.getBooks}
+                handleChange={props.handleChange}
+            />
         </React.Fragment>
     )
     else

@@ -51,8 +51,29 @@ export default class App extends Component {
       postToBeEdited: null,
       commentToBeEditd: null,
       profileToBeEdited: null,
-      postToAddComment: null
+      postToAddComment: null,
+      bookSearched: '',
+      bookInfo: []
     }
+  }
+
+  getBooks = (event) => {
+    event.preventDefault()
+    const searchURL = this.state.baseURL + '/books/search?title=' + this.state.bookSearched
+
+    fetch (searchURL, {
+        credentials: 'include'
+    })
+    .then (response => {
+      return response.json()
+    })
+    .then (data => {
+      console.log(data)
+      this.setState({
+        bookInfo: data.data.books,
+        bookSearched: ''
+      })
+    })
   }
 
   getUsers = () => {
@@ -95,7 +116,7 @@ export default class App extends Component {
   }
 
   getComments = () => {
-    fetch(this.state.baseURL + '/posts/comments/', {
+    fetch (this.state.baseURL + '/posts/comments/', {
       credentials: 'include'
     })
     .then (response => {
@@ -275,7 +296,6 @@ export default class App extends Component {
   }
 
   handleProfileEdit = async (event) => {
-    // console.log(this.state.postToBeEdited.name.username)
     event.preventDefault()
     const URL = this.state.baseURL + '/users/profile/' + this.state.profileToBeEdited.id
     try {const response = await fetch(URL, {
@@ -372,8 +392,7 @@ export default class App extends Component {
         }) 
     })
     .catch (error => console.log({'Error => ': error}))
-    }
-  
+  }
 
   handleSubmitNewComment = async (event, id) => {
   console.log(id)
@@ -587,10 +606,10 @@ export default class App extends Component {
 
   componentDidMount() {
     this.checkLoggedIn()
-  }
+    }
 
   render(){
-    // console.log(this.state.currentUserId)
+    console.log(this.state.bookInfo)
     return (
       <>
         {/* REGISTER/LOGIN/LOGOUT */}
@@ -624,7 +643,6 @@ export default class App extends Component {
         {this.state.userLoggedIn && 
           <NavBar profileButton={this.profileButton} forumButton={this.forumButton} />
         }
-        {/* MAIN PAGE */}
         <hr />
         {this.state.books && <Books />}
         {(this.state.posts && this.state.forumButton && this.state.userLoggedIn) && 
@@ -671,6 +689,8 @@ export default class App extends Component {
             userLoggedIn={this.state.userLoggedIn} 
             handleProfileSubmit={this.handleProfileSubmit}
             handleChange={this.handleChange}
+            getBooks={this.getBooks}
+            bookSearched={this.state.bookSearched}
           />
         }
         <hr />
