@@ -45,7 +45,6 @@ export default class App extends Component {
       location: '',
       profilepic: '',
       favebook: '',
-      wishlist: '',
       books: false,
       regButton: false,
       postToBeEdited: null,
@@ -70,7 +69,6 @@ export default class App extends Component {
       return response.json()
     })
     .then (data => {
-      console.log(data)
       this.setState({
         bookInfo: data.data.books,
         bookSearched: ''
@@ -90,7 +88,6 @@ export default class App extends Component {
       }  
     })
     .then(data => {
-      // console.log(data)
       this.setState({
         users: data.data
       })
@@ -102,7 +99,6 @@ export default class App extends Component {
       credentials: 'include'
     })
     .then (response => {
-      // console.log(response)
       if (response.status === 200) {
         return response.json()
       } else {
@@ -110,7 +106,6 @@ export default class App extends Component {
       }  
     })
     .then(data => {
-      // console.log(data.data)
       this.setState({
         posts: data.data
       })
@@ -122,7 +117,6 @@ export default class App extends Component {
       credentials: 'include'
     })
     .then (response => {
-      // console.log(response)
       if (response.status === 200) {
         return response.json()
       } else {
@@ -130,7 +124,6 @@ export default class App extends Component {
       }
     })
     .then (data => {
-      // console.log(data.data)
         this.setState({
           comments: data.data
         })
@@ -149,7 +142,6 @@ export default class App extends Component {
       }  
     })
     .then(data => {
-      console.log(data)
       this.setState({
         profiles: data.data
       })
@@ -212,12 +204,8 @@ export default class App extends Component {
       copyProfiles.splice(findIndex, 1)
       this.setState({
         profiles: copyProfiles,
-        forumButton: false,
-        profileButton: true,
         currentUserProfile: false
       })
-      // window.location.reload(false)
-      this.profileButton()
     })
   }
 
@@ -236,13 +224,11 @@ export default class App extends Component {
   }
 
   bookClick = (event) => {
-    console.log('clicked')
     let covers = document.getElementsByClassName('coverart');
     Array.from(covers).forEach((cover) => {
       cover.classList.remove('selectedart')
-    });
+    })
     event.target.classList.add('selectedart')
-    console.log(event.target)
     this.setState({
       selectedBook: event.target.id,
       selectedBookCover: event.target.src
@@ -256,7 +242,6 @@ export default class App extends Component {
   }
 
   handleSubmit = async (event) => {
-    // console.log(this.state.postToBeEdited.name.username)
     event.preventDefault()
     const URL = this.state.baseURL + '/posts/' + this.state.postToBeEdited.id
     try {const response = await fetch(URL, {
@@ -272,7 +257,6 @@ export default class App extends Component {
     })
       if (response.status === 200){
         const updatedPost = (await response.json()).data
-        // console.log(updatedPost)
         const findIndex = this.state.posts.findIndex(post => post.id === updatedPost.id)
         const copyPosts = [...this.state.posts]
         copyPosts[findIndex] = updatedPost
@@ -287,7 +271,6 @@ export default class App extends Component {
   }
 
   handleCommentEdit = async (event) => {
-    // console.log(this.state.postToBeEdited.name.username)
     event.preventDefault()
     const URL = this.state.baseURL + '/posts/comments/' + this.state.commentToBeEdited.id
     try {const response = await fetch(URL, {
@@ -302,7 +285,6 @@ export default class App extends Component {
     })
       if (response.status === 200){
         const updatedComment = (await response.json()).data
-        console.log(updatedComment)
         const findIndex = this.state.comments.findIndex(comment => comment.id === updatedComment.id)
         const copyComments = [...this.state.comments]
         copyComments[findIndex] = updatedComment
@@ -363,11 +345,9 @@ export default class App extends Component {
         credentials: 'include'
     })
     .then (response => {
-        // console.log(response)
         return response.json()
     })
     .then (data => {
-        // console.log(data)
         this.addPost(data.data)
         this.setState({
             title: '',
@@ -393,11 +373,9 @@ export default class App extends Component {
         credentials: 'include'
     })
     .then (response => {
-        console.log('This is the response', response)
         return response.json()
     })
     .then (data => {
-        console.log(data)
         this.addProfile(data.data)
         this.setState({
           name: '',
@@ -405,14 +383,14 @@ export default class App extends Component {
           profilepic: '',
           favebook: '',
           currentUserProfile: true,
-          selectedBookCover: ''
+          selectedBookCover: '',
+          bookInfo: []
         }) 
     })
     .catch (error => console.log({'Error => ': error}))
   }
 
   handleSubmitNewComment = async (event, id) => {
-  console.log(id)
   event.preventDefault()
   event.target.reset()
   fetch(this.state.baseURL + '/posts/comments/' + id, {
@@ -430,7 +408,6 @@ export default class App extends Component {
       return response.json()
   })
   .then (data => {
-      console.log(data)
       this.addComment(data.data)
       this.setState({
         comment: '',
@@ -455,7 +432,6 @@ export default class App extends Component {
       credentials: 'include'
     })
     .then (response => {
-      console.log(response)
       if (response.status === 201) {
         this.setState({
           userLoggedIn: true
@@ -465,7 +441,6 @@ export default class App extends Component {
     })
     .then (data => {
       console.log('✨ Registration successful! 🎉')
-      console.log(data)
       this.addUser(data)
       this.setState({
         email: '',
@@ -486,7 +461,6 @@ export default class App extends Component {
       username: this.state.username,
       password: this.state.password
     }
-    // console.log(loginDeets) // Testing
     try {
       const response = await fetch(URL, {
         method: 'POST',
@@ -501,8 +475,7 @@ export default class App extends Component {
         response.json()
         .then
         (data => {
-          console.log('✨ Login successful! 🎉', data)
-          // console.log('✨ Login successful! 🎉')
+          console.log('✨ Login successful! 🎉')
           this.setState({
             password: '',
             userLoggedIn: true,
@@ -564,7 +537,6 @@ export default class App extends Component {
   }
 
   showEditForm = (post) => {
-    // console.log('Pushed')
     this.setState({
       modalOpen: true,
       postToBeEdited: post
@@ -572,7 +544,6 @@ export default class App extends Component {
   }
 
   showCommentEditForm = (comment) => {
-    // console.log('Pushed')
     this.setState ({
       commentModalOpen: true,
       commentToBeEdited: comment
@@ -580,7 +551,6 @@ export default class App extends Component {
   }
 
   showProfileEditForm = (profile) => {
-    // console.log('Pushed')
     this.setState ({
       profileModalOpen: true,
       profileToBeEdited: profile
@@ -588,7 +558,6 @@ export default class App extends Component {
   }
 
   showAddCommentForm = (id) => {
-    console.log('clicked')
     this.setState ({
       newCommentModalOpen: true,
       postToAddComment: id
@@ -627,12 +596,6 @@ export default class App extends Component {
     }
 
   render(){
-    console.log(this.state.selectedBook)
-    console.log(this.state.profileButton)
-    console.log(this.state.userLoggedIn)
-    console.log(this.state.currentUserProfile)
-    console.log(this.state.bookInfo)
-    console.log(this.state.selectedBookCover)
     return (
       <>
         {/* REGISTER/LOGIN/LOGOUT */}
@@ -667,16 +630,6 @@ export default class App extends Component {
           <NavBar 
             profileButton={this.profileButton} 
             forumButton={this.forumButton}
-
-            // FOR PROFILES
-            profiles={this.state.profiles}
-            profileModal={this.state.profileModalOpen}
-            submitProfileEdit={this.handleProfileEdit}
-            profileToBeEdited={this.state.profileToBeEdited}
-            profileEdit={this.showProfileEditForm}
-            deleteProfile={this.deleteProfile}
-            handleChange={this.handleChange}
-
           />
         }
         <hr />
