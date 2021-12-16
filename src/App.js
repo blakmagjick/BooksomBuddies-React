@@ -432,11 +432,6 @@ export default class App extends Component {
       credentials: 'include'
     })
     .then (response => {
-      if (response.status === 201) {
-        this.setState({
-          userLoggedIn: true
-        })
-      }
       return response.json()
     })
     .then (data => {
@@ -484,6 +479,7 @@ export default class App extends Component {
             currentUserProfile: data.data.profilemade
           })
         })
+        this.checkLoggedIn()
         this.getPosts()
       }
     }
@@ -505,8 +501,10 @@ export default class App extends Component {
       this.setState({
         userLoggedIn: false,
         posts: [],
-        modalOpen: false
+        modalOpen: false,
+        regButton: false
       })
+      this.checkLoggedIn()
     })
   }
 
@@ -569,24 +567,24 @@ export default class App extends Component {
       credentials: 'include'
     })
     .then (response => {
-      if (response.status === 200) {
-        response.json()
-        .then(body => {
-          console.log(body.data)
-          this.setState({
-            userLoggedIn: true,
-            currentUserId: body.data.id,
-            currentUserProfile: body.data.profilemade
-          })
-        })
-        this.getPosts()
-        this.getComments()
-        this.getProfiles()
-        console.log(`A user is currently logged in`)
+      if (response.status === 204) {
+        console.log('No one is currently logged in')
         return response
       }
-      else {
-        console.log('No one is currently logged in')
+      else if (response.status === 200) {
+        response.json()
+        .then(body => {
+          console.log('A user is currently logged in')
+          this.setState({
+            currentUserId: body.data.id,
+            currentUserProfile: body.data.profilemade,
+            userLoggedIn: true
+          })
+          this.getPosts()
+          this.getComments()
+          this.getProfiles()
+          return response
+        })
       }
     })
   }
