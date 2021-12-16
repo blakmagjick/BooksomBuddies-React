@@ -26,29 +26,29 @@ export default function Profile (props) {
                         props.profileModal &&  
                         <div id='modalbg'>
                             <div id='modalmainprofile'>
-                                <form id='profileform' onSubmit={props.submitProfileEdit}>
-                                    <label>Name: </label>
+                                <form id='newpostform profileform' onSubmit={props.submitProfileEdit}>
+                                    <label id='newformdiv2'>Name: </label>
                                     <input 
                                         name='name'
                                         id='profilename'
                                         defaultValue={props.profileToBeEdited.name}
                                         onChange={props.handleChange}  
                                     /><br />
-                                    <label>Profile Pic: </label>
+                                    <label id='newformdiv'>Profile Pic: </label>
                                     <input 
                                         name='profilepic'
                                         id='profilepic'
                                         defaultValue={props.profileToBeEdited.profilepic}
                                         onChange={props.handleChange}  
                                     /><br />
-                                    <label>Location: </label>
+                                    <label id='newformdiv'>Location: </label>
                                     <input 
                                         name='location'
                                         id='profilelocation'
                                         defaultValue={props.profileToBeEdited.location}
                                         onChange={props.handleChange}  
                                     /><br />
-                                    <label>Fave Book: </label>
+                                    <label id='newformdiv'>Fave Book: </label>
                                     <input 
                                         name='favebook'
                                         id='profilefavebook'

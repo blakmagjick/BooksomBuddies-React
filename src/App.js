@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import NavBar from './NavBar'
+import About from './About'
 
 import Register from './users/Register'
 import RegisterButton from './users/RegisterButton';
@@ -564,13 +565,9 @@ export default class App extends Component {
       credentials: 'include'
     })
     .then (response => {
-      if (response.status === 204) {
-        console.log('No one is currently logged in')
-        return response
-      }
-      else if (response.status === 200) {
+      if (response.status === 200) {
         response.json()
-        .then(body => {
+        .then (body => {
           console.log('A user is currently logged in')
           this.setState({
             currentUserId: body.data.id,
@@ -583,10 +580,16 @@ export default class App extends Component {
           return response
         })
       }
+      else {
+        console.log('No one is currntly logged in')
+        this.setState({
+          userLoggedIn: false
+        })
+      }
     })
   }
 
-  componentDidMount() {
+    componentDidMount() {
     this.checkLoggedIn()
     }
 
@@ -628,6 +631,7 @@ export default class App extends Component {
           />
         }
         <hr />
+        <About userLoggedIn={this.state.userLoggedIn}/>
         {this.state.books && <Books />}
         {(this.state.posts && this.state.forumButton && this.state.userLoggedIn) && 
           <MainPost 

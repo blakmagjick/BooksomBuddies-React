@@ -31,14 +31,14 @@ export default class MainPost extends Component {
                     }
                     {   this.props.modal &&  
                         <div id='modalbg'>
-                            <div id='modalmain'>
+                            <div id='modalmainedit'>
                                 <form onSubmit={this.props.handleSubmit}>
                                     <label>Title: </label>
                                     <input 
                                         name='title'
                                         defaultValue={this.props.postToBeEdited.title}
                                         onChange={this.props.handleChange}    
-                                    />
+                                    /><br />
                                     <label>Post: </label>
                                     <input 
                                         name='post'
@@ -71,7 +71,7 @@ export default class MainPost extends Component {
                                 }
                                 {   this.props.commentModal &&  
                                     <div id='modalbg'>
-                                        <div id='modalmain'>
+                                        <div id='modalmaincomment'>
                                             <form onSubmit={this.props.submitCommentEdit}>
                                                 <label>Comment: </label>
                                                 <input 
@@ -99,13 +99,13 @@ export default class MainPost extends Component {
                     }
                     {   (this.props.newCommentModal &&  post.id === this.props.postToAddComment) &&
                         <div id='modalbg'>
-                            <div id='modalmain'>
+                            <div id='modalmaincomment'>
                                 <form onSubmit={(event) => {this.props.handleSubmitNewComment(event, post.id)}}>
                                     <label>Comment: </label>
                                     <input 
                                         name='comment'
                                         onChange={this.props.handleChange}    
-                                    />
+                                    /><br />
                                     <button className='btn btn-secondary btn-sm'>Add Comment</button>
                                 </form> 
                             </div>
