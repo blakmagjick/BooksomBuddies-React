@@ -44,6 +44,20 @@ li {
   flex-direction: column;
 }
 
+#modalmainprofile {
+  background-color: lightgrey;
+  padding-top: 10px;
+  width: 50%;
+  height: 25%;
+  border-radius: 20px;
+  border: 2px 2px 10px 3px #222;
+
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+}
+
 #postlines {
   border-top: dotted;
 }

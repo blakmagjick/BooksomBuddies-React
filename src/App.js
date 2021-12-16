@@ -479,8 +479,6 @@ export default class App extends Component {
             currentUserProfile: data.data.profilemade
           })
         })
-        this.checkLoggedIn()
-        this.getPosts()
       }
     }
     catch (error) {
@@ -504,7 +502,6 @@ export default class App extends Component {
         modalOpen: false,
         regButton: false
       })
-      this.checkLoggedIn()
     })
   }
 

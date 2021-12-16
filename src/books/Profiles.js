@@ -25,7 +25,7 @@ export default function Profile (props) {
                     {   
                         props.profileModal &&  
                         <div id='modalbg'>
-                            <div id='modalmain'>
+                            <div id='modalmainprofile'>
                                 <form id='profileform' onSubmit={props.submitProfileEdit}>
                                     <label>Name: </label>
                                     <input 
