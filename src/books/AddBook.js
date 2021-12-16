@@ -1,27 +1,24 @@
-import React, { Component } from 'react';
+import React from 'react';
+import BookCoverList from '../books/BookCoverList'
 
-export default class AddBook extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
 
-        }
-    }
-
-    render () {
-        return (
-        <>
-            <form onSubmit={this.props.getBooks}>
-                <label htmlFor='bookSearched'>Book Title: </label>
-                <input
-                    type='text'
-                    id='bookSearched'
-                    name='bookSearched'
-                    onChange={(event) => this.props.handleChange(event)}
-                />
-                <button className='btn btn-secondary btn-sm' type='submit'>Search Open Library</button>
-            </form>
-        </>
-        )
-    }
+export default function AddBook (props) {
+    return (
+    <div id='newformdiv'>
+        <form onSubmit={props.getBooks}>
+            <label htmlFor='bookSearched'>Fave Book: </label>
+            <input
+                type='text'
+                id='bookSearched'
+                name='bookSearched'
+                onChange={(event) => props.handleChange(event)}
+            />
+            <button className='btn btn-secondary btn-sm' type='submit'>Search Open Library</button>
+        </form>
+        <BookCoverList 
+            bookInfo={props.bookInfo}
+            bookClick={props.bookClick}
+        />
+    </div>
+    )
 }

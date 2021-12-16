@@ -9,6 +9,13 @@ export default function NewProfile (props) {
         <React.Fragment>
         <hr />
             <h2>Create New Profile</h2>
+            <AddBook 
+                    getBooks={props.getBooks}
+                    handleChange={props.handleChange}
+                    bookInfo={props.bookInfo}
+                    bookClick={props.bookClick}
+                />
+            <br />
             <div id='newformdiv'>
             <form onSubmit={props.handleProfileSubmit}>
                 <label id='newformdiv'>Name:  </label>
@@ -32,21 +39,9 @@ export default function NewProfile (props) {
                     name='profilepic'
                     onChange={(event) => props.handleChange(event)}
                 /><br />
-                <label id='newformdiv'>Fave Book:  </label>
-                <input 
-                    type='text'
-                    id='formfavebook'
-                    name='favebook'
-                    onChange={(event) => props.handleChange(event)}
-                /><br />
-                <br />
                 <input className='btn btn-secondary btn-sm' type='submit' value='Add Profile' />
             </form>
             </div><br />
-            <AddBook 
-                getBooks={props.getBooks}
-                handleChange={props.handleChange}
-            />
         </React.Fragment>
     )
     else

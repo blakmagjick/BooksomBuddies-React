@@ -98,3 +98,14 @@ h6 {
   width: 85px;
   text-align: left;
 }
+
+.coverart {
+  margin: 2px;
+  border: 5px solid;
+  color: transparent;
+}
+
+.selectedart {
+  color: orange;
+}
+

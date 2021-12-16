@@ -53,6 +53,8 @@ export default class App extends Component {
       profileToBeEdited: null,
       postToAddComment: null,
       bookSearched: '',
+      selectedBook: '',
+      selectedBookCover: '',
       bookInfo: []
     }
   }
@@ -108,7 +110,7 @@ export default class App extends Component {
       }  
     })
     .then(data => {
-      console.log(data.data)
+      // console.log(data.data)
       this.setState({
         posts: data.data
       })
@@ -128,7 +130,7 @@ export default class App extends Component {
       }
     })
     .then (data => {
-      console.log(data.data)
+      // console.log(data.data)
         this.setState({
           comments: data.data
         })
@@ -209,8 +211,13 @@ export default class App extends Component {
       const copyProfiles = [...this.state.profiles]
       copyProfiles.splice(findIndex, 1)
       this.setState({
-        profiles: copyProfiles
+        profiles: copyProfiles,
+        forumButton: false,
+        profileButton: true,
+        currentUserProfile: false
       })
+      // window.location.reload(false)
+      this.profileButton()
     })
   }
 
@@ -225,6 +232,20 @@ export default class App extends Component {
       this.setState({
         comments: copyComments
       })
+    })
+  }
+
+  bookClick = (event) => {
+    console.log('clicked')
+    let covers = document.getElementsByClassName('coverart');
+    Array.from(covers).forEach((cover) => {
+      cover.classList.remove('selectedart')
+    });
+    event.target.classList.add('selectedart')
+    console.log(event.target)
+    this.setState({
+      selectedBook: event.target.id,
+      selectedBookCover: event.target.src
     })
   }
 
@@ -304,8 +325,7 @@ export default class App extends Component {
         name: event.target.name.value,
         profilepic: event.target.profilepic.value,
         location: event.target.location.value,
-        favebook: event.target.favebook.value,
-        wishlist: event.target.wishlist.value
+        favebook: event.target.favebook.value
       }),
       headers: {
         'Content-Type': 'application/json'
@@ -358,17 +378,14 @@ export default class App extends Component {
   }
 
   handleProfileSubmit = async (event, id) => {
-    console.log(id)
     event.preventDefault()
-    event.target.reset()
     fetch(this.state.baseURL + '/users/profile/new', {
         method: 'POST',
         body: JSON.stringify({
             name: this.state.name,
             location: this.state.location,
             profilepic: this.state.profilepic,
-            favebook: this.state.favebook,
-            wishlist: this.state.wishlist
+            favebook: this.state.selectedBookCover
         }),
         headers: {
             'Content-Type': 'application/json'
@@ -387,8 +404,8 @@ export default class App extends Component {
           location: '',
           profilepic: '',
           favebook: '',
-          wishlist: '',
-          currentUserProfile: true
+          currentUserProfile: true,
+          selectedBookCover: ''
         }) 
     })
     .catch (error => console.log({'Error => ': error}))
@@ -484,13 +501,14 @@ export default class App extends Component {
         response.json()
         .then
         (data => {
-          // console.log('✨ Login successful! 🎉', data)
-          console.log('✨ Login successful! 🎉')
+          console.log('✨ Login successful! 🎉', data)
+          // console.log('✨ Login successful! 🎉')
           this.setState({
             password: '',
             userLoggedIn: true,
             loggedButton: false,
-            currentUserId: data.data.id
+            currentUserId: data.data.id,
+            currentUserProfile: data.data.profilemade
           })
         })
         this.getPosts()
@@ -609,7 +627,12 @@ export default class App extends Component {
     }
 
   render(){
+    console.log(this.state.selectedBook)
+    console.log(this.state.profileButton)
+    console.log(this.state.userLoggedIn)
+    console.log(this.state.currentUserProfile)
     console.log(this.state.bookInfo)
+    console.log(this.state.selectedBookCover)
     return (
       <>
         {/* REGISTER/LOGIN/LOGOUT */}
@@ -641,7 +664,20 @@ export default class App extends Component {
           regButton={this.state.regButton} 
         />
         {this.state.userLoggedIn && 
-          <NavBar profileButton={this.profileButton} forumButton={this.forumButton} />
+          <NavBar 
+            profileButton={this.profileButton} 
+            forumButton={this.forumButton}
+
+            // FOR PROFILES
+            profiles={this.state.profiles}
+            profileModal={this.state.profileModalOpen}
+            submitProfileEdit={this.handleProfileEdit}
+            profileToBeEdited={this.state.profileToBeEdited}
+            profileEdit={this.showProfileEditForm}
+            deleteProfile={this.deleteProfile}
+            handleChange={this.handleChange}
+
+          />
         }
         <hr />
         {this.state.books && <Books />}
@@ -668,7 +704,7 @@ export default class App extends Component {
             showNewCommentForm={this.showAddCommentForm}
             handleSubmitNewComment={this.handleSubmitNewComment}
             postToAddComment={this.state.postToAddComment}
-            comment={this.state.comment}
+            comment={this.state.comment} 
           />
         }
         {(this.state.userLoggedIn && this.state.profileButton) && 
@@ -691,6 +727,9 @@ export default class App extends Component {
             handleChange={this.handleChange}
             getBooks={this.getBooks}
             bookSearched={this.state.bookSearched}
+            selectedBookCover={this.state.selectedBookCover}
+            bookInfo={this.state.bookInfo}
+            bookClick={this.bookClick}
           />
         }
         <hr />
