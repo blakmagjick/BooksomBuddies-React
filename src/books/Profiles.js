@@ -16,19 +16,19 @@ export default function Profile (props) {
                         <span>Fave book:<br /> <img src={profile.favebook} alt='favebookcover' height='150px' /></span>
                     </div><br />
                     {
-                        profile.username.id === props.currentUserId  &&
+                        (profile.username.id === props.currentUserId || props.currentUserUsername === 'sudo') && 
                         <button className='border border-secondary btn btn-secondary-outline btn-sm' onClick={() => props.profileEdit(profile)}><img width='13px' alt='edit button' src='https://i.imgur.com/Wie5RHb.png' /></button>
                     }
                     {
-                        profile.username.id !== props.currentUserId  &&
-                        <button id='blank'></button>
-                    }
-                    {
-                        profile.username.id === props.currentUserId &&
+                        (profile.username.id === props.currentUserId || props.currentUserUsername === 'sudo') && 
                         <button className='border border-secondary btn btn-secondary-outline btn-sm' type='submit' onClick={() => props.deleteProfile(profile.id)}><img width='13px' alt='delete button' src='https://i.imgur.com/1uWeVvr.png' /></button>
                     }
                     {
-                        profile.username.id !== props.currentUserId &&
+                        (profile.username.id !== props.currentUserId || props.currentUserUsername !== 'sudo') &&
+                        <button id='blank'></button>
+                    }
+                    {
+                        (profile.username.id !== props.currentUserId || props.currentUserUsername !== 'sudo') &&
                         <button id='blank'></button>
                     }
                     </div>

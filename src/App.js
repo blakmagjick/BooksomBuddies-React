@@ -31,6 +31,7 @@ export default class App extends Component {
       loggedButton: false,
       commentButton: false,
       currentUserId: null,
+      currentUserUsername: null,
       currentUserProfile: false,
       email: '',
       username: '',
@@ -442,6 +443,7 @@ export default class App extends Component {
         email: '',
         password: '',
         currentUserId: data.data.id,
+        currentUserUsername: data.data.username,
         userLoggedIn: true
       })
       this.checkLoggedIn()
@@ -477,7 +479,8 @@ export default class App extends Component {
             userLoggedIn: true,
             loggedButton: false,
             currentUserId: data.data.id,
-            currentUserProfile: data.data.profilemade
+            currentUserProfile: data.data.profilemade,
+            currentUserUsername: data.data.username
           })
         })
       }
@@ -645,6 +648,7 @@ export default class App extends Component {
             currentUserId={this.state.currentUserId} 
             delete={this.deletePost} 
             comments={this.state.comments}
+            currentUserUsername={this.state.currentUserUsername}
             // Edit Comments 
             commentEdit={this.showCommentEditForm} 
             deleteComment={this.deleteComment} 
@@ -669,6 +673,7 @@ export default class App extends Component {
           deleteProfile={this.deleteProfile}
           handleChange={this.handleChange} 
           currentUserId={this.state.currentUserId} 
+          currentUserUsername={this.state.currentUserUsername}
          />
         }
         {
