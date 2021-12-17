@@ -14,9 +14,11 @@ export default function About (props) {
                 </tr>
                 <tr>
                     <th>Are you looking for other people with the same taste in books as you?</th>
-                    <td>Browse user profiles to find other users who have the same fave book as</td>
+                    <td>Browse user profiles to find other users who have the same fave book as you.</td>
                 </tr>
             </table>
+            <br />
+            <p>Register above to continue.</p>
         </React.Fragment>
     )
     else
