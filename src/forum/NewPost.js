@@ -16,7 +16,7 @@ export default function NewPost (props) {
                     onChange={(event) => props.handleChange(event)}
                 /><br />
                 <label id='newformdiv2'>Post: </label>
-                <input 
+                <textarea 
                     type='text'
                     id='formpost'
                     name='post'
