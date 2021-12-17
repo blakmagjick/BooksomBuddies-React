@@ -38,7 +38,7 @@ export default function NewProfile (props) {
                     id='formprofilepic'
                     name='profilepic'
                     onChange={(event) => props.handleChange(event)}
-                /><br />
+                />**Use a link to a photo online<br />
                 <input className='btn btn-secondary btn-sm' type='submit' value='Add Profile' />
             </form>
             </div><br />

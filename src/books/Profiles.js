@@ -7,9 +7,9 @@ export default function Profile (props) {
             {props.profiles.map((profile, i) => {
                 return (
                     <>
-                    <div id='crap'>
+                    <div id='userblock'>
                     <div id={i} className='profiles'>
-                        <img id='profpic' src={profile.profilepic} alt='user' height='150px'/><br />
+                        <img id='profpic' src={profile.profilepic} alt='user' height='150px' width='150px'/><br />
                         <span id='profinfo'>{profile.username.username}</span><br />
                         <span>Name: {profile.name}</span><br />
                         <span><img src='https://i.imgur.com/MJBVdsO.png' height='15px' alt='locatepin'/> {profile.location}</span><br />
