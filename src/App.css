@@ -2,6 +2,7 @@ body {
   margin: 15px;
   background-color:rgb(21, 35, 43);
   color: lightslategrey;
+  font-family: 'Baloo Bhaijaan 2', cursive;
 }
 
 footer {
@@ -14,7 +15,6 @@ button {
 
 li {
   list-style-type: none;
-  /* padding: 10px; */
   margin-left: 25px; 
 }
 
@@ -145,4 +145,30 @@ h6 {
   justify-content: flex-start;
   align-items: center;
   flex-direction: column;
+}
+
+#profpic {
+  border-radius: 50%;
+}
+
+#crap {
+  display: inline-block;
+  margin-right: 15px;
+  height: 455px;
+  align-items: top;
+  padding-top: 10px;
+}
+
+#profinfo {
+  color: white;
+  font-size: 25px;
+}
+
+#blank {
+  color: transparent;
+  border: 0;
+  background-color: transparent;
+  width: 30px;
+  height: 30px;
+  pointer-events: none;
 }

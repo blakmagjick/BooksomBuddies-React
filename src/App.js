@@ -581,7 +581,7 @@ export default class App extends Component {
         })
       }
       else {
-        console.log('No one is currntly logged in')
+        console.log('No one is currently logged in')
         this.setState({
           userLoggedIn: false
         })
