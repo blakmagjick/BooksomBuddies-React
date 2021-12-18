@@ -1,70 +1,70 @@
-# Getting Started with Create React App
+# Booksom Buddies 
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Project Description
 
-## Available Scripts
+## Links
+Deployed Site: https://booksom-buddies.herokuapp.com/ \
+Frontend Repo: https://github.com/blakmagjick/booksombuddies-react \
+Backend Repo: https://github.com/blakmagjick/booksombuddies-flask
 
-In the project directory, you can run:
+## Technologies Used
+Flask/Python, React/Javascript, SQL, Postgres/pgAdmin
 
-### `npm start`
+## Installation Steps
+- Fork and clone the frontend and backend repos. 
+- In the terminal, in the directory for the frontend: ```npm install``` in order to install dependencies, then ```npm run start``` to run server.
+- In the terminal, in the directory for the backend: ```pip3 install``` to install dependencies, then ```python3 app.py``` to run server.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## User Stories
+- As a user, I want to be able to create a profile.
+- As a user, I want to be able to add books to a wish list, so that I can easily look at the list while I'm out book shopping.
+- As a user, I want to be able to edit my profile, but no one else's.
+- As a user, I want to be able to go to the forum and talk to other users about books, so that I can get some ideas of what to read next, and/or talk about what I love/hate about books I've read.
+- As a user, I want to be able to easily add books to my profile without manually adding the information myself.
+- As a user, I want the app to look pretty and professional.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Wireframes
+![Screen Shot 2021-11-22 at 12 47 30 PM](https://user-images.githubusercontent.com/6404196/146621061-57698632-7b7d-446f-8ba6-24a3204a9754.png)
+![Screen Shot 2021-11-22 at 12 47 25 PM](https://user-images.githubusercontent.com/6404196/146621084-8e7ee3e4-83b2-4c36-a4e4-d29916b43294.png)
 
-### `npm test`
+## Entity Relationship Diagrams
+<img width="659" alt="Screen Shot 2021-12-17 at 4 34 49 PM" src="https://user-images.githubusercontent.com/6404196/146622621-bd78018f-284b-4b35-a3d4-73a1b60d6f78.png">
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## MVP
+[x] Login/Logout functionality \
+[x] Forum to chat with other user's about books \
+[x] Add books to user's profile via Open Library API \
+[x] Stylized
 
-### `npm run build`
+## Stretch Goals
+[ ] Book recommendations by genre \
+[ ] What I Want to Read Next section \
+[ ] Leave notes on books, that only user can see \
+[ ] Add books to a Wishlist \
+[ ] Optimize viewing for mobile \
+[ ] Dark/Light mode
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Suggested Functionality From Test Users
+[x] Original Poster can delete any comments on their post \
+[ ] Default user pic used when someone doesn't add one \
+[ ] Send out an email after registration to confirm it went through \
+[ ] Have user messaging - if someone tries to login and they haven't registered before \
+[ ] User messaging on the frontend if username or pw is wrong \
+[ ] Ability to upload photo from computer
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Bugs/Unsolved Problems
+[x] When someone who doesn’t have a profile logs in, the Create New Profile component doesn’t show up until the page is refreshed \
+[ ] Each child in a list should have a unique "key" prop warning \
+[ ] Move the Create New Profile to top of the page \
+[ ] Mixed Content: The page at [...] was loaded over HTTPS, but requested an insecure element 'http://[...]. This request was automatically upgraded to HTTPS, For more information see https://blog.chromium.org/2019/10/no-more-mixed-messages-about-https.html \
+[ ] Cookies issue with Safari browser
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Future Features
+[ ] Add ISBN to Book Model \
+[ ] Amazon Affiliate link \
+[ ] Forum shows list of posts by title, and all information comes up when clicked \
+[ ] Have single profile pages with more information than just the All Profiles page \
+[ ] Add other users to a friend's list \
+[ ] When clicking on abook for more info, you can see what other users have that book
