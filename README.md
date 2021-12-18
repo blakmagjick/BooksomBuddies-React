@@ -50,7 +50,9 @@ Flask/Python, React/Javascript, SQL, Postgres/pgAdmin, HTML, CSS
 [ ] Send out an email after registration to confirm it went through \
 [ ] Have user messaging - if someone tries to login and they haven't registered before \
 [ ] User messaging on the frontend if username or pw is wrong \
-[ ] Ability to upload photo from computer
+[ ] Ability to upload photo from computer \
+[ ] Ability to close modal without leaving adding or editing a comment/post \
+[ ] Show more than 5 covers in the book search
 
 
 ## Bugs/Unsolved Problems
